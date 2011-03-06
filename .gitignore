@@ -1,0 +1,14 @@
+*.suo
+Debug/
+*.sdf
+*.filters
+*.user
+*.~*
+*.dcu
+*.dfm
+*.exe
+*.res
+*.dof
+*.cfg
+*.ddp
+*.rdb
