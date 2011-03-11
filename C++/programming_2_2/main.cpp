@@ -20,6 +20,12 @@ struct stats
 	int minutes_out;
 	int minutes_city;
 	int sms_count;
+	bool used;
+
+	stats()
+	{
+		used = false;
+	}
 };
 
 stats data;
@@ -53,15 +59,15 @@ struct rate
 		cout << "Cost to MTS: " << cost_in << endl;
 		cout << "Cost to other providers: " << cost_out << endl;
 		cout << "Cost SMS: " << cost_sms << endl;
+		cout << endl;
 	}
 };
 
-const int RATES_COUNT = 5;
-rate rates[RATES_COUNT] = {rate("Всё для общения", 9900, 1, 2, 110),
-rate("Всё для общения", 9900, 1, 2, 110),
-rate("Всё для общения", 9900, 1, 2, 110),
-rate("Всё для общения", 9900, 1, 2, 110),
-rate("Всё для общения", 9900, 1, 2, 110)};
+const int RATES_COUNT = 4;
+rate rates[RATES_COUNT] = {rate("Всё для общения", 9900, 75, 295, 120),
+rate("Отличный", 9900, 60, 280, 120),
+rate("Будь практичнее", 6000, 40, 280, 120),
+rate("Детский", 0, 75, 350, 75)};
 
 
 int menu()
@@ -91,6 +97,7 @@ void input()
 	read_param("Munutes on other", data.minutes_out);
 	read_param("Minutes on city phone", data.minutes_city);
 	read_param("SMS count", data.sms_count);
+	data.used = true;
 }
 
 void print_info()
@@ -103,10 +110,10 @@ int find_optimal()
 {
 	int min_index, min_value = 99999999;
 	for(int i = 0; i < RATES_COUNT; i++)
-		if(rates[i].count(data) > min_value)
+		if(rates[i].count(data) < min_value)
 		{
 			min_value = rates[i].count(data);
-			min_index = 1;
+			min_index = i;
 		}
 	return min_index;
 }
@@ -124,20 +131,25 @@ int main(int argc, char **argv)
 				input();
 				break;
 			case MenuChoises::OPTIMAL:
-				result = find_optimal();
-				cout << rates[result].name << " - " << rates[result].count(data);
+				if(data.used)
+				{	
+					result = find_optimal();
+					cout << rates[result].name << " - " << rates[result].count(data);
+				}
+				else
+					cout << "No data";
 				break;
 			case MenuChoises::INFO:
 				print_info();
 				break;
 			case MenuChoises::FEEDBACK:
-				cout << "Звоните 411 и поговорим";
+				cout << "Звоните 411";
 				break;
 			default:
 				cout << "Incorrect choise" << endl;
 				break;
 		}
-		cout << endl;
+		cout << endl << endl;
 	}
 	return 0;
 }
