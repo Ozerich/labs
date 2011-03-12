@@ -12,3 +12,7 @@ Debug/
 *.cfg
 *.ddp
 *.rdb
+*.ini
+*.o
+*.ppu
+*.ini
