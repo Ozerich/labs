@@ -11,7 +11,7 @@ TMonome = class
     fVarPower: integer;
   public
     constructor Create(coefficent: extended; varPower: integer);
-
+    
     procedure SetCoefficent(value: extended);
     procedure SetVarPower(value: integer);
 
@@ -20,6 +20,9 @@ TMonome = class
 
     function Calculate(variable: extended): extended;
     function ToString: string;
+    
+    property Coefficent: extended read GetCoefficent write SetCoefficent;
+    property VarPower: integer read GetVarPower write SetVarPower;
 end;
 
 implementation

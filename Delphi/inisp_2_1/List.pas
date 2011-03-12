@@ -20,6 +20,7 @@ TList = class
     procedure AddItem(value: TMonome);
     function Process: TMonome;
     function Find(power: integer): TMonome;
+    
 end;
 
 implementation
