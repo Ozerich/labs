@@ -13,6 +13,8 @@ Debug/
 *.ddp
 *.rdb
 *.ini
+*.pidb
+*.userprefs
 *.o
 *.ppu
 *.ncb

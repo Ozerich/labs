@@ -1,19 +1,13 @@
 unit List;
 
 interface
-uses Monome;
+uses Monome, ListElem;
 
 type
 
-TElem = class
-  public
-    value: TMonome;
-    next: TElem;
-end;
-
 TList = class
   private
-    fBeg, fStep: TElem;
+    fBeg, fStep: TListElem;
   public
     constructor Create;
 
@@ -27,22 +21,21 @@ implementation
 
 constructor TList.Create;
 begin
-  fBeg := nil;
-  fStep := nil;
+  fBeg := TListElem.Create;
+  fStep := TListElem.Create;
 end;
 
 
 
 procedure TList.AddItem(value: TMonome);
 var
-  newElem, temp, last, temp2: TElem;
+  newElem, temp, last, temp2: TListElem;
 begin
-  newElem := TElem.Create;
+  newElem := TListElem.Create(value);
   last := nil;
-  newElem.value := value;
   if(fBeg = nil) then
     fBeg := newElem
-  else if(value.GetVarPower < fBeg.value.GetVarPower) then
+  else if(value.VarPower < fBeg.value.VarPower) then
   begin
     newElem.next := fBeg;
     fBeg := newElem;
@@ -53,9 +46,9 @@ begin
     begin
       last := temp;
 
-      if(temp.value.GetVarPower = value.GetVarPower) then
+      if(temp.value.VarPower = value.VarPower) then
       begin
-        temp.value.SetCoefficent(value.GetCoefficent);
+        temp.value.Coefficent := value.Coefficent;
         exit;
         break;
       end;
@@ -66,7 +59,7 @@ begin
         break;
       end;
 
-      if((temp.next.value.GetVarPower > value.GetVarPower) and (temp.value.GetVarPower < value.GetVarPower)) then
+      if((temp.next.value.VarPower > value.VarPower) and (temp.value.VarPower < value.VarPower)) then
       begin
         temp2 := temp.next;
         temp.next := newElem;
@@ -97,12 +90,12 @@ begin
 end;
 
 function TList.Find(power: integer): TMonome;
-var temp: TElem;
+var temp: TListElem;
 begin
   temp := fBeg;
   while(temp <> nil) do
   begin
-    if(temp.value.GetVarPower = power) then
+    if(temp.value.VarPower = power) then
     begin
       Result := temp.value;
       exit;
@@ -111,7 +104,5 @@ begin
   end;
   Result := nil;
 end;
-
-
 
 end.
