@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ozierski_4_1", "ozierski_4_1.vcproj", "{4D8CB2D0-A5AB-4BFE-8BC0-35F5F06AC40D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ozierski_4_2", "..\ozierski_4_2\ozierski_4_2.vcproj", "{180A68C9-E0AA-48B6-8601-3EE5022BBD29}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4D8CB2D0-A5AB-4BFE-8BC0-35F5F06AC40D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4D8CB2D0-A5AB-4BFE-8BC0-35F5F06AC40D}.Debug|Win32.Build.0 = Debug|Win32
+		{4D8CB2D0-A5AB-4BFE-8BC0-35F5F06AC40D}.Release|Win32.ActiveCfg = Release|Win32
+		{4D8CB2D0-A5AB-4BFE-8BC0-35F5F06AC40D}.Release|Win32.Build.0 = Release|Win32
+		{180A68C9-E0AA-48B6-8601-3EE5022BBD29}.Debug|Win32.ActiveCfg = Debug|Win32
+		{180A68C9-E0AA-48B6-8601-3EE5022BBD29}.Debug|Win32.Build.0 = Debug|Win32
+		{180A68C9-E0AA-48B6-8601-3EE5022BBD29}.Release|Win32.ActiveCfg = Release|Win32
+		{180A68C9-E0AA-48B6-8601-3EE5022BBD29}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
