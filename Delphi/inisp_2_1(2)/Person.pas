@@ -75,4 +75,15 @@ begin
     Result := fPhones[index];
 end;
 
+function TPerson.ToString: string;
+var
+  i: integer;
+begin
+  Result := 'Name: ' + name + chr(10);
+  Result := Result + 'Surname: ' + surname + chr(10);
+  Result := Result + 'Phones:' + chr(10);
+  for i := 0 to Length(fPhones) - 1 do
+    Result := Result + Phone[i].PhoneNumber + chr(10);
+end;
+
 end.

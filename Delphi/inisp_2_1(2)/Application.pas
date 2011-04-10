@@ -45,7 +45,7 @@ procedure TApplication.DeletePerson;
 var
   index: integer;
 begin
-  index := InputString('Person index; ');
+  index := InputInt('Person index: ');
   PhoneBook.DeletePerson(index);
 end;
 
