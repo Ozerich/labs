@@ -84,6 +84,13 @@ begin
     WriteResult(FloatToStr(res.Calculate(StrToFloat(ans))));
 end;
 
+procedure OnAddMonomeProc(coefficent: extended; varPower: integer);
+begin
+    WriteLn('This procedure is called by Event');
+    WriteLn('Coefficent:',FloatToStr(coefficent),', varPower: ', varPower);
+end;
+
+
 begin
   writeln('Vital Ozierski, 052004 group (c) 2011');
   readln;
@@ -102,6 +109,7 @@ begin
     begin
       SetLength(data, Length(data) + 1);
       data[Length(data) - 1] := TPolynome.Create;
+      data[Length(data) - 1].OnAddMonome := OnAddMonomeProc;
       writeln('The polynome is added. You can edit it');
     end
     else if(cmd = 'edit') then

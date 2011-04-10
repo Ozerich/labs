@@ -12,3 +12,10 @@ Debug/
 *.cfg
 *.ddp
 *.rdb
+*.ini
+*.pidb
+*.userprefs
+*.o
+*.ppu
+*.ncb
+*.dsk

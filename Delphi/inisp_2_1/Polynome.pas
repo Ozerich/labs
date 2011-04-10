@@ -6,9 +6,13 @@ uses List, Monome;
 
 type
 
+TOnAddMonome = procedure(coefficent: extended; varPower: integer);
+
 TPolynome = class
   private
     fMonomeList: TList;
+
+    fOnAddMonome: TOnAddMonome;
   public
     constructor Create;
 
@@ -22,6 +26,8 @@ TPolynome = class
     class function Subtract(a, b: TPolynome): TPolynome;
     class function Multiply(a, b: TPolynome): TPolynome;
     class function Invert(a: TPolynome): TPolynome;
+
+    property OnAddMonome: TOnAddMonome read fOnAddMonome write fOnAddMonome;
 end;
 
 implementation
@@ -37,6 +43,8 @@ var
 begin
   monome := TMonome.Create(coefficent, varPower);
   fMonomeList.AddItem(monome);
+  if(Assigned(fOnAddMonome)) then
+    fOnAddMonome(coefficent, varPower);
 end;
 
 function TPolynome.ToString: string;
@@ -79,7 +87,7 @@ var
 begin
   monome := fMonomeList.Find(varPower);
   if(monome <> nil) then
-    Result := monome.GetCoefficent
+    Result := monome.Coefficent
   else
     Result := 0.0;
 end;
@@ -94,7 +102,7 @@ begin
     monome := fMonomeList.Process;
     while(monome <> nil) do
       monome := fMonomeList.Process;
-    Result := monome.GetVarPower;
+    Result := monome.VarPower;
   end;
 end;
 
@@ -106,7 +114,7 @@ begin
   monome := a.fMonomeList.Process;
   while(monome <> nil) do
   begin
-    Result.AddMonome(-monome.GetCoefficent, monome.GetVarPower);
+    Result.AddMonome(-monome.Coefficent, monome.VarPower);
     monome := a.fMonomeList.Process;
   end;
 end;
@@ -119,14 +127,14 @@ begin
   monomeA := a.fMonomeList.Process;
   while(monomeA <> nil) do
   begin
-    Result.AddMonome(b.GetCoefficent(monomeA.GetVarPower) + monomeA.GetCoefficent, monomeA.GetVarPower);
+    Result.AddMonome(b.GetCoefficent(monomeA.VarPower) + monomeA.Coefficent, monomeA.VarPower);
     monomeA := a.fMonomeList.Process;
   end;
 
   monomeB := b.fMonomeList.Process;
   while(monomeB <> nil) do
   begin
-    Result.AddMonome(a.GetCoefficent(monomeB.GetVarPower) + monomeB.GetCoefficent, monomeB.GetVarPower);
+    Result.AddMonome(a.GetCoefficent(monomeB.VarPower) + monomeB.Coefficent, monomeB.VarPower);
     monomeB := b.fMonomeList.Process;
   end;
 end;

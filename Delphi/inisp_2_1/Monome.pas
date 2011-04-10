@@ -9,22 +9,31 @@ TMonome = class
   private
     fCoefficent: extended;
     fVarPower: integer;
-  public
-    constructor Create(coefficent: extended; varPower: integer);
-
+    
     procedure SetCoefficent(value: extended);
     procedure SetVarPower(value: integer);
 
     function GetCoefficent: extended;
     function GetVarPower: integer;
 
+  public
+    constructor Create;
+    constructor Create(coefficent: extended; varPower: integer);
+
     function Calculate(variable: extended): extended;
     function ToString: string;
+    
+    property Coefficent: extended read GetCoefficent write SetCoefficent;
+    property VarPower: integer read GetVarPower write SetVarPower;
 end;
 
 implementation
 
-constructor TMonome.Create(coefficent: extended; varPower: integer);
+constructor TMonome.Create;
+begin
+end;
+
+constructor TMonome.Create(coefficent: extended; varPower: integer);overload;
 begin
   fCoefficent := coefficent;
   fVarPower := varPower;
