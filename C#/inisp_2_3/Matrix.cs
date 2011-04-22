@@ -189,7 +189,7 @@ namespace Lab3
             Matrix matrix = GetFederal();
             return matrix.Multiply(1 / Determinant());
         }
-
+		
         public int Cofactor(int row, int col)
         {
             Matrix minor = GetMinor(row, col);

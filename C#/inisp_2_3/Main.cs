@@ -92,6 +92,7 @@ namespace Lab3
                     if (index2 == BAD_INDEX)
                         continue;
                     Matrix matrix = Matrix.Add(data[index1 - 1], data[index2 - 1]);
+					Console.WriteLine(matrix);
                     PrintResult("Matrix " + index1 + " + Matrix " + index2 + " =\n", matrix.ToString());
                 }
                 else if (cmd == "mul_matrix")

@@ -8,8 +8,13 @@ namespace Lab2
         {
             double result = Math.Pow(2, -x);
             result *= Math.Sqrt(x + Math.Pow(Math.Abs(y), 1 / 4));
-            result *= Math.Pow(Math.Pow(Math.E, (x - 1) / Math.Sin(z)), 1 / 3);
-            return result;
+			try{
+				result *= Math.Pow(Math.Pow(Math.E, (x - 1) / Math.Sin(z)), 1 / 3);
+		}catch(DivideByZeroException e)
+			{
+				Console.WriteLine("By zero");
+			}
+			return result;
         }
 
         public static void Main(string[] argv)
