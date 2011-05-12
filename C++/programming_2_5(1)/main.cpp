@@ -84,6 +84,7 @@ int main()
 {
     int i,n, t;
     LIST *list = (LIST *)malloc(sizeof(LIST));
+	list->begin = list->end = 0;
     FILE *f = fopen("input", "r");
     fscanf(f, "%d", &n);
     for(i = 0; i < n; i++)

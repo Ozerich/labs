@@ -14,9 +14,16 @@ public
     procedure DeleteEdge(v1, v2: integer);
     function Find(v1, v2: integer; var edge: TEdge): integer;
     function ExistEdge(v1, v2: integer): boolean;
+
+    constructor Create;
 end;
 
 implementation
+
+constructor TEdgeList.Create;
+begin
+  SetLength(fEdges, 0);
+end;
 
 function TEdgeList.ExistEdge(v1, v2: integer): boolean;
 begin
