@@ -17,7 +17,8 @@ namespace Lab6
         public MatrixNoSquare() : base() { }
     }
 
-    class Matrix<T> where T: IMatrixItem
+    class Matrix<T> where T: INumeric
+
     {
         private T[][] Data;
         
@@ -62,10 +63,10 @@ namespace Lab6
         {
             get
             {
-                for (int i = 0; i < RowCount; i++)
-                    for (int j = 0; j < ColCount; j++)
-                        if(Data[i][j].IsZero())
-                            return false;
+               // for (int i = 0; i < RowCount; i++)
+                 //   for (int j = 0; j < ColCount; j++)
+                   //     if(Data[i][j].IsZero())
+                     //       return false;
                 return true;
             }
         }
@@ -82,10 +83,10 @@ namespace Lab6
         {
             get
             {
-                for(int i = 0; i < RowCount; i++)
-                    for(int j = 0; j < ColCount; j++)
-                        if( (i == j && this[i,j].IsZero()) || (i != j && !this[i,j].IsZero()))
-                            return false;
+               // for(int i = 0; i < RowCount; i++)
+                 //   for(int j = 0; j < ColCount; j++)
+                   //     if( (i == j && this[i,j].IsZero()) || (i != j && !this[i,j].IsZero()))
+                     //       return false;
                 return true;
             }
         }
@@ -96,9 +97,9 @@ namespace Lab6
             {
                 if (IsDiagonal == false)
                     return false;
-                for (int i = 0; i < RowCount; i++)
-                    if (!this[i, i].IsSingle())
-                        return false;
+            //    for (int i = 0; i < RowCount; i++)
+              //      if (!this[i, i].IsSingle())
+                //        return false;
                 return true;
             }
         }
