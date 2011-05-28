@@ -1,16 +1,5 @@
 ﻿using System;
 
-public class ListItem
-{
-    public ListItem Next{ get; set; }
-    public object Data { get; set; }
-
-    public ListItem(object val)
-    {
-        Data = val;
-    }
-}
-
 
 abstract public class List
 {
@@ -63,41 +52,6 @@ abstract public class List
 
 }
 
-
-class IntList : List
-{
-    public void AddBack(int item)
-    {
-        base.AddBack(item);
-    }
-
-    public void AddFront(int item)
-    {
-        base.AddFront(item);
-    }
-
-    public int GetFront()
-    {
-        return (int)base.GetFront();
-    }
-
-    public int GetBack()
-    {
-        return (int)base.GetBack();
-    }
-
-    public bool Find(int val)
-    {
-        ListItem CurNode = beg;
-        while(CurNode != null)
-        {
-            if((int)CurNode.Data == val)
-                return true;
-            CurNode = CurNode.Next;
-        }
-        return false;
-    }
-}
 
 
 class StringList : List
