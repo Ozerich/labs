@@ -111,7 +111,10 @@ void MenuManager::run()
 	{
 		scanf("%d", &key);
 		Menu menu = stack[stack_len - 1];
-		menu.menu_items[key - 1].onClick();
+		if(key > menu.items_count || key <= 0)
+			printf("Incorrect choise\n");
+		else
+			menu.menu_items[key - 1].onClick();
 	}
 }
 

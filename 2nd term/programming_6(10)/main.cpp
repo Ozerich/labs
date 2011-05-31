@@ -1,8 +1,11 @@
 #include <cstdio>
-#include "string.h"
+#include <iostream>
+#include <string>
 #include <cstdlib>
 #include "menu.h"
 #include "db.h"
+
+using namespace std;
 
 MenuManager menu_manager;
 DB db;
@@ -22,13 +25,14 @@ void add_test()
     printf("Test name: ");
     scanf("%s", test.name);
     printf("Questions count: ");
-    scanf("%d\n", &test.questions_count);
+    scanf("%d", &test.questions_count);
     test.questions = new Question[test.questions_count];
     for(int i = 0; i < test.questions_count; i++)
     {
         printf("%d question:\nName:", i + 1);
         test.questions[i].text = new char[1000];
-        fgets(test.questions[i].text, 1000, stdin);
+		cin.get();
+		cin.get(test.questions[i].text, 1000);
         printf("Answers count: ");
         scanf("%d", &test.questions[i].answers_count);
         test.questions[i].answers  = new char*[test.questions[i].answers_count];
@@ -36,7 +40,8 @@ void add_test()
         {
             printf("%d answer: ", j + 1);
             test.questions[i].answers[j] = new char[1000];
-            scanf("%s", test.questions[i].answers[j]);
+			cin.get();
+			cin.get(test.questions[i].answers[j], 1000);
         }
         printf("Correct answer: ");
         scanf("%d", &test.questions[i].correct_answer);   
@@ -54,12 +59,17 @@ void add_test()
 
 void run_test()
 {
+	char *user_name = new char[1000];
+	printf("Your name: ");
+	cin.get();
+	cin.get(user_name, 1000);
     for(int i = 0; i < db.tests_count; i++)
         printf("%d - %s\n", i + 1, db.tests[i].name);
     printf("\n");
     int index; 
     printf("Test index: ");
     scanf("%d", &index);
+	printf("\n");
     
     int good_count = 0;
     int user_answer;
@@ -70,7 +80,7 @@ void run_test()
         printf("Question: %s\n", test.questions[i].text);
         for(int j = 0; j < test.questions[i].answers_count; j++)
             printf("Answer %d: %s\n", j + 1, test.questions[i].answers[j]);
-        printf("Your answer: ");
+        printf("\nYour answer: ");
         scanf("%d", &user_answer);
         if(user_answer == test.questions[i].correct_answer)
             good_count++;
@@ -78,17 +88,29 @@ void run_test()
     }
     
     printf("Test completed. Your result: %d correct answers", good_count++);
+	db.tests[index - 1].AddResult(user_name, good_count);
     printf("\n\n");
-    
     menu_manager.clear();
     menu_manager.show("Main");
-    
 }
 
 
 
-void stats(){}
-void set_password(){}
+void stats()
+{
+	for(int i = 0; i < db.tests_count; i++)
+        printf("%d - %s\n", i + 1, db.tests[i].name);
+    printf("\n");
+    int index; 
+    printf("Test index: ");
+    scanf("%d", &index);
+	UserResult *results = db.tests[index - 1].results;
+	for(int i = 0; i < db.tests[index - 1].result_count; i++)
+		printf("%s - %d\n", results[i].name, results[i].result);
+    printf("\n\n");
+    menu_manager.clear();
+    menu_manager.show("Main");
+}
 
 void delete_test()
 {
@@ -120,15 +142,13 @@ int main()
 	MenuItem *delete_test_mi = new MenuItem("Delete Test", delete_test);
 	MenuItem *run_test_mi = new MenuItem("Run Test", run_test);
 	MenuItem *stats_mi = new MenuItem("Statictics", stats);
-	MenuItem *set_password_mi = new MenuItem("Set Password", set_password);
 	MenuItem *back_mi = new MenuItem("Back", back);
 	MenuItem *exit_mi = new MenuItem("Exit", exit);
 
 	Menu *main_menu = new Menu("Main");
 	main_menu->add(edit_tests_mi);
 	main_menu->add(run_test_mi);
-//	main_menu->add(stats_mi);
-//	main_menu->add(set_password_mi);
+	main_menu->add(stats_mi);
 	main_menu->add(exit_mi);
 
 	Menu *edit_test_menu = new Menu("EditTests");
