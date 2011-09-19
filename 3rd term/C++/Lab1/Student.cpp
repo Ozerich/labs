@@ -2,14 +2,14 @@
 
 Student::Student()
 {
-	name = surname = group = "";
 }
 
-Student::Student(string name, string surname, string group)
+Student::Student(const char* name, const char* surname, const char* group)
 {
 	SetName(name);
 	SetSurname(surname);
 	SetGroup(group);
+	cout << "Constuctor for " << name << " " << surname << " runned" << endl << endl;
 }
 
 Student::Student(Student &student)
@@ -17,51 +17,64 @@ Student::Student(Student &student)
 	SetName(student.GetName());
 	SetSurname(student.GetSurname());
 	SetGroup(student.GetGroup());
+	cout << "Constuctor(copy) for " << name << " " << surname << " runned" << endl << endl;
 }
 
-void Student::SetName(string name)
+void Student::SetName(const char *name)
 {
-	if(name.size() > 0)
-		this->name.assign(name.begin(), name.end());
+	if(strlen(name) > 0)
+	{
+		this->name = new char[strlen(name)];
+		strcpy(this->name, name);
+	}
 }
 
-void Student::SetSurname(string surname)
+void Student::SetSurname(const char *surname)
 {
-	if(surname.size() > 0)
-		this->surname.assign(surname.begin(), surname.end());
+	if(strlen(surname) > 0)
+	{
+		this->surname = new char[strlen(surname)];
+		strcpy(this->surname, surname);
+	}
 }
 
-void Student::SetGroup(string group)
+void Student::SetGroup(const char *group)
 {
-	for(unsigned int i = 0; i < group.size(); i++)
+	for(unsigned int i = 0; i < strlen(group); i++)
 		if(group[i] < '0' || group[i] > '9')
 			return;
-	if(group.size() > 0)
-		this->group.assign(group.begin(), group.end());
+	if(strlen(group) > 0)
+	{
+		this->group = new char[strlen(group)];
+		strcpy(this->group, group);
+	}
 }
 
-string Student::GetGroup()
+char* Student::GetGroup()
 {
 	return group;
 }
 
-string Student::GetName()
+char* Student::GetName()
 {
 	return name;
 }
 
-string Student::GetSurname()
+char* Student::GetSurname()
 {
 	return surname;
 }
 
-string Student::ToString()
+void Student::ToString()
 {
-	string result;
-	
-	result = "Student's name: " + name + "\r\n";
-	result += "Student's surname: " + surname + "\r\n";
-	result += "Student's group: " + group + "\r\n";
+	cout << "Student's name: " << name << endl << "Student's surname: " << surname << endl << "Student's group: " << group << endl;
+}
 
-	return result;
+Student::~Student()
+{
+	cout << "Destructor for " << name << " " << surname << " runned" << endl;
+	
+	delete name;
+	delete surname;
+	delete group;
 }

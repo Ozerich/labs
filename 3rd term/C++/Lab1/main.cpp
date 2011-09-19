@@ -8,15 +8,19 @@ using namespace std;
 int main()
 {
 	Student *st1 = new Student("Vital", "Ozierski", "052004");
-	cout << st1->ToString() << endl;
+	st1->ToString();
 
 	Student *st2 = new Student(*st1);
-	cout << st2->ToString() << endl;
+	st2->ToString();
 
 	st1->SetName("Name");
-	st1->SetName("Surname");
-	st1->SetGroup("group");
 
-	cin.get();cin.get();
+	cout << endl << "After changing" << endl;
+	st1->ToString();
+	cout << endl;
+
+	delete st1;
+	delete st2;
+
 	return 0;
 }
