@@ -1,31 +1,34 @@
 #ifndef STUDENT_H
 #define STUDENT_H
 
-#include <string>
-#include <cstdio>
+#include <string.h>
+#include <stdio.h>
+#include <iostream>
 
 using namespace std;
 
 class Student
 {
 private:
-	string name;
-	string surname;
-	string group;
+	char *name;
+	char *surname;
+	char *group;
 public:
 	Student();
 	Student(Student &);
-	Student(string , string , string );
+	Student(const char* , const char* , const char* );
 
-	void SetName(string);
-	void SetSurname(string);
-	void SetGroup(string);
+	void SetName(const char *);
+	void SetSurname(const char *);
+	void SetGroup(const char *);
 
-	string GetName();
-	string GetSurname();
-	string GetGroup();
+	char* GetName();
+	char* GetSurname();
+	char* GetGroup();
 
-	string ToString();
+	void ToString();
+
+	~Student();
 };
 
 #endif
