@@ -18,21 +18,19 @@ namespace Lab1_Ozierski
             Console.WriteLine("BLR: " + blrs.ToString());
 
             Console.WriteLine("\nConvert from BLR to Dollars: ");
-            Console.WriteLine(blrs.Convert(ValuteType.USD).ToString());
+            Console.WriteLine(blrs.Exchange(CurrencyType.USD).ToString());
 
             Console.WriteLine("\nConvert from EUR to Dollars: ");
-            Console.WriteLine(euros.Convert(ValuteType.USD).ToString());
+            Console.WriteLine(euros.Exchange(CurrencyType.USD).ToString());
 
             Console.WriteLine("\nConvert from EUR to BLR: ");
-            Console.WriteLine(euros.Convert(ValuteType.BLR).ToString());
+            Console.WriteLine(euros.Exchange(CurrencyType.BLR).ToString());
 
             Console.WriteLine("\nUSD + EUR: ");
             Console.WriteLine((dollars + euros).ToString());
 
             Console.WriteLine("\nEUR + 50:");
             Console.WriteLine((euros + 50).ToString());
-
-            
 
             Console.Read();
         }

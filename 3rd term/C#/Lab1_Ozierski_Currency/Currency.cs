@@ -6,13 +6,12 @@ using System.Text.RegularExpressions;
 
 namespace Lab1_Ozierski
 {
-    public enum ValuteType {USD, BLR, EUR};
     class Currency: IComparable<Currency>, IEquatable<Currency>
     {
         public decimal Money { get; private set; }
-        public ValuteType Valute { get; private set; }
+        public CurrencyType Valute { get; private set; }
 
-        public Currency(decimal money, ValuteType valute)
+        public Currency(decimal money, CurrencyType valute)
         {
             Money = money;
             Valute = valute;
@@ -47,12 +46,12 @@ namespace Lab1_Ozierski
 
         public static Currency operator +(Currency a, Currency b)
         {
-            return new Currency(a.Money + b.Convert(a.Valute).Money, a.Valute);
+            return new Currency(a.Money + b.Exchange(a.Valute).Money, a.Valute);
         }
 
         public static Currency operator -(Currency a, Currency b)
         {
-            return new Currency(a.Money - b.Convert(a.Valute).Money, a.Valute);
+            return new Currency(a.Money - b.Exchange(a.Valute).Money, a.Valute);
         }
 
         public static Currency operator *(Currency a, decimal b)
@@ -86,7 +85,11 @@ namespace Lab1_Ozierski
         {
             return !(a == b);
         }
-
+        /// <summary>
+        /// Parse from input string
+        /// </summary>
+        /// <param name="s">input string</param>
+        /// <returns>Currency object</returns>
         public static Currency Parse(string s)
         {
             Regex regex = new Regex(@"(\d+)(\.\d*\d*)*\s*(\w{3})");
@@ -94,17 +97,21 @@ namespace Lab1_Ozierski
             {
                 string[] data = regex.Split(s);
                 if (data.Length == 4)
-                    return new Currency(Decimal.Parse(data[1]), (ValuteType)Enum.Parse(typeof(ValuteType), data[2]));
+                    return new Currency(Decimal.Parse(data[1]), (CurrencyType)Enum.Parse(typeof(CurrencyType), data[2]));
                 else if (data.Length == 5)
-                    return new Currency(Decimal.Parse(data[1] + data[2]), (ValuteType)Enum.Parse(typeof(ValuteType), data[3]));
+                    return new Currency(Decimal.Parse(data[1] + data[2]), (CurrencyType)Enum.Parse(typeof(CurrencyType), data[3]));
                 else
                     throw new FormatException("Invalid format");
             }
             else
                 throw new FormatException("Invalid format");
         }
-
-        public Currency Convert(ValuteType to)
+        /// <summary>
+        /// Exchange process
+        /// </summary>
+        /// <param name="to">Buy currency</param>
+        /// <returns>New currency</returns>
+        public Currency Exchange(CurrencyType to)
         {
             return new Currency(Money * Market.GetRatio(Valute, to), to);
         }
