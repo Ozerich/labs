@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1FBCA119-B778-42D7-89F4-3768A340D2F3}</ProjectGuid>
+    <ProjectGuid>{D3958CE9-36AC-422B-8298-9202ACE0B82F}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lab1_Ozierski_Currency</RootNamespace>
-    <AssemblyName>Lab1_Ozierski_Currency</AssemblyName>
+    <RootNamespace>Lab1_Ozierski_Rational</RootNamespace>
+    <AssemblyName>Lab1_Ozierski_Rational</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -43,11 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Currency.cs" />
-    <Compile Include="Market.cs" />
+    <Compile Include="MyMath.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CurrencyType.cs" />
+    <Compile Include="RationalNumber.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

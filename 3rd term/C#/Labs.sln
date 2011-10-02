@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab1_Ozierski_Currency", "Lab1_Ozierski_Currency\Lab1_Ozierski_Currency.csproj", "{1FBCA119-B778-42D7-89F4-3768A340D2F3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab1_Ozierski_Rational", "Lab1_Ozierski_Rational\Lab1_Ozierski_Rational.csproj", "{D3958CE9-36AC-422B-8298-9202ACE0B82F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +15,10 @@ Global
 		{1FBCA119-B778-42D7-89F4-3768A340D2F3}.Debug|x86.Build.0 = Debug|x86
 		{1FBCA119-B778-42D7-89F4-3768A340D2F3}.Release|x86.ActiveCfg = Release|x86
 		{1FBCA119-B778-42D7-89F4-3768A340D2F3}.Release|x86.Build.0 = Release|x86
+		{D3958CE9-36AC-422B-8298-9202ACE0B82F}.Debug|x86.ActiveCfg = Debug|x86
+		{D3958CE9-36AC-422B-8298-9202ACE0B82F}.Debug|x86.Build.0 = Debug|x86
+		{D3958CE9-36AC-422B-8298-9202ACE0B82F}.Release|x86.ActiveCfg = Release|x86
+		{D3958CE9-36AC-422B-8298-9202ACE0B82F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
