@@ -20,6 +20,9 @@ Global
 		{D3958CE9-36AC-422B-8298-9202ACE0B82F}.Release|x86.ActiveCfg = Release|x86
 		{D3958CE9-36AC-422B-8298-9202ACE0B82F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Lab1_Ozierski_Rational\Lab1_Ozierski_Rational.csproj
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection

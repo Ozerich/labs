@@ -131,25 +131,40 @@ namespace Lab1_Ozierski_Rational
             return ((double)a.Numerator / a.Denominator);
         }
 
-
+		/// <summary>
+		/// Reduce fraction
+		/// </summary>
+		/// <returns>
+		/// Reduced fraction
+		/// </returns>
         public RationalNumber Short()
         {
             int gcd = MyMath.GCD(Numerator, Denominator);
             return new RationalNumber(Numerator / gcd, Denominator / gcd);
         }
 
-
-
         public override string ToString()
         {
             return String.Format("{0}/{1}", Numerator, Denominator);
         }
 
+		/// <summary>
+		/// Converto to decimal format 0.00
+		/// </summary>
+		/// <returns>
+		///	output string
+		/// </returns>
         public string ToDoubleString()
         {
             return ((double)Numerator / Denominator).ToString();
         }
-
+		
+		/// <summary>
+		/// Parse string
+		/// </summary>
+		/// <param name="str">
+		/// input string
+		/// </param>
         public static RationalNumber Parse(string str)
         {
             if (Regex.IsMatch(str, @"^\d+[,\.]\d+$"))
