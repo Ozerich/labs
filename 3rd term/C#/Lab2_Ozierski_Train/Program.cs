@@ -9,9 +9,7 @@ namespace Lab2_Ozierski_Train
     {
         static void Main(string[] args)
         {
-            Train t = new Train();
-            t.Dispose();
-            Console.Read();
+			
         }
     }
 }

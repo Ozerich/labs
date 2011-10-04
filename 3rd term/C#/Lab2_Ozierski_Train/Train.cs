@@ -6,16 +6,22 @@ using System.Text;
 
 namespace Lab2_Ozierski_Train
 {
-    class Train : IEquatable<Train>, IEnumerable<Truck>, IDisposable
+    class Train : IEquatable<Train>, IEnumerable<Coach>, IDisposable
     {
-        public List<Truck> Trucks { get; private set; }
-
+        public List<Coach> Coaches { get; private set; }
+		public int Number{ get; private set; }
+		
+		public Train(int number)
+		{
+			Number = number;
+		}
+		
         public bool Equals(Train other)
         {
-            if (other.Trucks.Count() != Trucks.Count())
+            if (other.Coaches.Count() != Coaches.Count())
                 return false;
-            foreach (Truck truck in Trucks)
-                if (other.Trucks.IndexOf(truck) == -1)
+            foreach (Coach truck in Coaches)
+                if (other.Coaches.IndexOf(truck) == -1)
                     return false;
             return true;
         }
@@ -24,25 +30,25 @@ namespace Lab2_Ozierski_Train
         {
             if (!(obj is Train))
                 return false;
-            return Equals((Truck)obj);
+            return Equals((Train)obj);
         }
 
-        public Truck this[int index]
+        public Coach this[int index]
         {
             get
             {
-                return Trucks[index];
+                return Coaches[index];
             }
         }
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return Number;
         }
 
-        public IEnumerator<Truck> GetEnumerator()
+        public IEnumerator<Coach> GetEnumerator()
         {
-            return Trucks.GetEnumerator();
+            return Coaches.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -64,5 +70,36 @@ namespace Lab2_Ozierski_Train
         {
             Console.WriteLine("Dispose method for Train");
         }
+		
+		public int GetCoachCount()
+		{
+			return Coaches.Count();
+		}
+		
+		public int GetPassengerCount()
+		{
+			return Coaches.Sum(x => x.Sum(y => y.PassengerCount));
+		}
+		
+		public ICollection<Coach> GetCoachesByType(CoachType coachType)
+		{
+			return Coaches.Where( x => coachType == CoachType ); 
+		}
+		
+		public Coach AddPassenger(CoachType coachType)
+		{
+			foreach(Coach coach in GetCoachesByType(coachType))
+				if(coach.HasFreePlace())
+				{
+					coach.AddPassenger();
+					return coach;
+				}
+			throw new InvalidOperationException("No free coaches");
+		}
+		
+		public override string ToString()
+		{
+			return "Train: " + Number;
+		}
     }
 }
