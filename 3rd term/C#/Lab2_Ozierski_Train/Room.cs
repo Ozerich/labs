@@ -8,7 +8,24 @@ namespace Lab2_Ozierski_Train
     class Room : IEquatable<Room>, IDisposable
     {
         private int passengerCount;
-        private int position = 0;
+		private int passengerLimit;
+		
+		public CoachType type{ get; private set; }
+		
+		public int PassengerLimit
+		{
+			get
+			{
+				return passengerLimit;
+			}
+			set
+			{
+				if(value < 0)
+					throw new FormatException("Limit cannot be negative");
+				else
+					passengerLimit = value;
+			}
+		}
 
         public int PassengerCount
         {
@@ -24,29 +41,37 @@ namespace Lab2_Ozierski_Train
                     passengerCount = value;
             }
         }
+		
+		public bool HasFreePlace()
+		{
+			return (PassengerLimit - PassengerCount > 0);
+		}
+		
+		public void AddPassenger()
+		{
+			if(PassengerCount < PassengerLimit)
+				PassengerCount++;
+			else
+				throw new InvalidOperationException("Room is full");
+		}
+		
+		public void DeletePassenger()
+		{
+			if(passengerCount > 0)
+				PassengerCount--;
+			else
+				throw new InvalidOperationException("Room is empty");
+		}
 
-        public int Position
+        public Room(int passengerLimit)
         {
-            get
-            {
-                return position;
-            }
-            set{
-                if(value < 0)
-                    throw new FormatException("Position cannot be negative");
-                else
-                    position = value;
-            }
-        }
-
-        public Room(int position)
-        {
-            Position = position;
+			PassengerLimit = passengerLimit;
+			PassengerCount = 0;
         }
 
         public bool Equals(Room other)
         {
-            return Position == other.Position;
+            return PassengerCount == other.PassengerCount && PassengerLimit == other.PassengerLimit;
         }
 
         public override bool Equals(object obj)
@@ -58,7 +83,7 @@ namespace Lab2_Ozierski_Train
 
         public override int GetHashCode()
         {
-            return Position;
+            return PassengerCount;
         }
 
         public static bool operator ==(Room a, Room b)
@@ -73,7 +98,12 @@ namespace Lab2_Ozierski_Train
 
         public void Dispose()
         {
-
+			Console.WriteLine("Room dispose()");
         }
+		
+		public override string ToString ()
+		{
+			 return String.Format("{0} ({1})", PassengerCount, PassengerLimit);
+		}
     }
 }
