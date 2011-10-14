@@ -10,7 +10,7 @@ namespace Lab1_Ozierski
         static void Main(string[] args)
         {
             Currency dollars = Currency.Parse("50 USD");
-            Currency euros = Currency.Parse("40.50 EUR");
+            Currency euros = Currency.Parse("40,50 EUR");
             Currency blrs = Currency.Parse("100000BLR");
 
             Console.WriteLine("Dollars: " + dollars.ToString());
@@ -33,6 +33,7 @@ namespace Lab1_Ozierski
             Console.WriteLine((euros + 50).ToString());
 
             Console.Read();
+			Console.Read();
         }
     }
 }

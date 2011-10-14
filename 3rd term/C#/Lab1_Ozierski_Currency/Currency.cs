@@ -99,7 +99,7 @@ namespace Lab1_Ozierski
                 if (data.Length == 4)
                     return new Currency(Decimal.Parse(data[1]), (CurrencyType)Enum.Parse(typeof(CurrencyType), data[2]));
                 else if (data.Length == 5)
-                    return new Currency(Decimal.Parse(data[1] + data[2]), (CurrencyType)Enum.Parse(typeof(CurrencyType), data[3]));
+                   return new Currency(Decimal.Parse(data[1] + data[2]), (CurrencyType)Enum.Parse(typeof(CurrencyType), data[3]));
                 else
                     throw new FormatException("Invalid format");
             }

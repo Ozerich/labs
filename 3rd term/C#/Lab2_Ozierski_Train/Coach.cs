@@ -10,6 +10,7 @@ namespace Lab2_Ozierski_Train
     {
         public List<Room> Rooms { get; private set; }
 		public int Id{ get; private set; }
+		public CoachType Type;
 
         public bool Equals(Coach other)
         {
@@ -36,9 +37,9 @@ namespace Lab2_Ozierski_Train
             }
         }
 		
-		public void GetFreePlaces()
+		public int GetFreePlaces()
 		{
-			return Rooms.Sum(x => (PassengerLimit - PassengerCount));
+			return Rooms.Sum(x => (x.PassengerLimit - x.PassengerCount));
 		}
 		
 		public bool HasFreePlace()
@@ -103,7 +104,7 @@ namespace Lab2_Ozierski_Train
 		
 		public override string ToString()
 		{
-			return Rooms.Count();
+			return Rooms.Count().ToString();
 		}
     }
 

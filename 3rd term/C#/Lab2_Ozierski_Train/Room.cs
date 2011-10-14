@@ -37,7 +37,9 @@ namespace Lab2_Ozierski_Train
             {
                 if (value < 0)
                     throw new FormatException("Passengers cannot be negative");
-                else
+                else if(value > PassengerLimit)
+					throw new FormatException("The room is full");
+				else
                     passengerCount = value;
             }
         }
