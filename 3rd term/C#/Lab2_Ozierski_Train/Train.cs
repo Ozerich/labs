@@ -81,9 +81,9 @@ namespace Lab2_Ozierski_Train
 			return Coaches.Sum(x => x.Sum(y => y.PassengerCount));
 		}
 		
-		public ICollection<Coach> GetCoachesByType(CoachType coachType)
+		public IEnumerable<Coach> GetCoachesByType(CoachType coachType)
 		{
-			return Coaches.Where( x => coachType == CoachType ); 
+			return Coaches.Where( x => coachType == x.Type ); 
 		}
 		
 		public Coach AddPassenger(CoachType coachType)
