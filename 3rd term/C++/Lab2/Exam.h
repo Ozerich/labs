@@ -6,6 +6,7 @@
 class Exam : public Trial
 {
 private:
+    //Result mark of exam
 	int mark;
 public:
 	Exam();

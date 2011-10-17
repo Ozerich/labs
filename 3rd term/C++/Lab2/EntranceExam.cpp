@@ -12,7 +12,7 @@ EntranceExam::~EntranceExam(){};
 void EntranceExam::SetSubject(const char *_subject)
 {
 	subject = new char[strlen(_subject)];
-	strcpy(subject, _subject);	
+	strcpy(subject, _subject);
 }
 
 char* EntranceExam::GetSubject()
@@ -22,6 +22,7 @@ char* EntranceExam::GetSubject()
 
 void EntranceExam::Print()
 {
+    cout << "Information about entrance exam:" << endl;
 	cout << "Exam subject: " << GetSubject() << endl;
 	Exam::Print();
 }

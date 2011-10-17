@@ -1,0 +1,1 @@
+g++ -o -c Trial.o Trial.cpp

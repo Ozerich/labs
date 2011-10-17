@@ -6,6 +6,7 @@
 class EntranceExam : public Exam
 {
 private:
+    //Subject of exam
 	char *subject;
 public:
 	EntranceExam();

@@ -1,10 +1,6 @@
 #include "Test.h"
 #include <math.h>
 
-int round(double number)
-{
-    return (int)(number < 0.0 ? ceil(number - 0.5) : floor(number + 0.5));
-}
 
 Test::Test() : Trial()
 {
@@ -46,11 +42,13 @@ int Test::GetCorrectCount()
 
 int Test::GetMark()
 {
-	return round(((double)10 / questions_count) * correct_count);
+    //Convert to 10 ball system
+	return (int)((double)10 / questions_count) * correct_count;
 }
 
 void Test::Print()
 {
+    cout << "Information about test: " << endl;
 	cout << "Test name: " << GetName() << endl;
 	cout << "Test Result: " << GetMark() << " (" << GetCorrectCount() << "/" << GetQuestionsCount() << ")" << endl;
 	cout << endl;

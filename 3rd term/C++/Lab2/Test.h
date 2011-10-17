@@ -6,7 +6,9 @@
 class Test : public Trial
 {
 private:
+    //Questions count in this test
 	int questions_count;
+	//Correct answers
 	int correct_count;
 public:
 	Test();
@@ -15,6 +17,8 @@ public:
 
 	void SetQuestionsCount(int);
 	void SetCorrectCount(int);
+
+	//Set result of test (1st param - answers count, 2nd param - correct answers)
 	void SetResult(int, int);
 
 	int GetQuestionsCount();

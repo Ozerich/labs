@@ -16,8 +16,8 @@ int main(int argc, char **argv)
 
 	EntranceExam *entranceExam = new EntranceExam("Entrance Exam 2", "Mathematics");
 	entranceExam->SetMark(5);
-	
 
+    //Testing virtual method Print()
 	Trial **trials = new Trial*[3];
 	trials[0] = test;
 	trials[1] = exam;
@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 
 	for(int i = 0; i < 3; i++)
 		trials[i]->Print();
-	
+
 	cin.get();cin.get();
 	return 0;
 }

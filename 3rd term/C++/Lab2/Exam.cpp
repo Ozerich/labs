@@ -21,6 +21,7 @@ int Exam::GetMark()
 
 void Exam::Print()
 {
+    cout << "Information about exam: " << endl;
 	cout << "Exam name: " << name << endl;
 	cout << "Exam mark: " << GetMark() << endl;
 	cout << endl;
