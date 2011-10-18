@@ -1,0 +1,18 @@
+hold on;
+syms eps x k N
+
+eps = 0.3;
+N = round((1 + eps) / (2 * eps)) + 1;
+x = 0:0.1:1;
+
+%????? eps-???????????
+plot(x, Calc(x, 1, inf) + eps, '-.g');
+plot(x, Calc(x, 1, inf) - eps, '-.g');
+%????? ???????? ?????
+plot(x, Calc(x, 1, inf) , '-');
+
+for i = N : (N + 20)
+    plot(x, Calc(x, 1, i), '-r');
+end;
+
+hold on;
