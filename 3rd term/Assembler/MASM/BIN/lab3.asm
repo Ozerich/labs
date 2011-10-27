@@ -23,15 +23,8 @@ pop b
 mov AX, a
 mov CX, 1
 mov n, CX
-cmp AX, 1
-jg ret_0
-cmp AX, 1
-je ret_minus
-mov BX, b
-cmp BX, 0
-jge ret_no
-cmp AX, BX
-jl ret_1
+cmp AX, b
+jle a_less_b
 cycl:
 	mov AX, BX
 	mov BX, b
@@ -40,35 +33,15 @@ cycl:
 	call mnoz
 	pop AX
 	cmp AX, a
-	ja fix_res
+	jge end_prog
 	mov BX, AX
 	mov AX, n
 	inc AX
 	mov n, AX
 	jmp cycl
-fix_res:
-	mov AX, n
-	inc AX
-	mov n, AX
-	jmp end_prog
-ret_0:
+a_less_b:
 	mov n, 0
 	jmp end_prog
-ret_1:
-	mov n, 1
-	jmp end_prog
-ret_minus:
-	mov AX, 2Dh
-	push AX
-	call write_char
-	mov n, 1
-	jmp end_prog
-ret_no:
-	mov AX, 2Dh
-	push AX
-	call write_char
-	mov AH, 4ch
-	int 21h
 		
 end_prog:
 	push n

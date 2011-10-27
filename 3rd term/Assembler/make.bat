@@ -1,0 +1,4 @@
+PATH=MASM\BIN\
+MASM\BIN\MASM lab3.asm
+MASM\BIN\LINK16 lab3.obj
+CV\CV lab3.exe
