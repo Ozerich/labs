@@ -63,10 +63,10 @@ namespace Lab2_Ozierski_Train
 				throw new InvalidOperationException("Room is empty");
 		}
 
-        public Room(int passengerLimit)
+        public Room(int passengerLimit, int passengerCount = 0)
         {
 			PassengerLimit = passengerLimit;
-			PassengerCount = 0;
+            PassengerCount = passengerCount;
         }
 
         public bool Equals(Room other)
@@ -103,7 +103,7 @@ namespace Lab2_Ozierski_Train
 		
 		public override string ToString ()
 		{
-			 return String.Format("{0} ({1})", PassengerCount, PassengerLimit);
+			 return String.Format("Room {0} ({1})\n", PassengerCount, PassengerLimit);
 		}
     }
 }

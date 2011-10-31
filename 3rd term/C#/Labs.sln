@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab1_Ozierski_Currency", "L
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab1_Ozierski_Rational", "Lab1_Ozierski_Rational\Lab1_Ozierski_Rational.csproj", "{D3958CE9-36AC-422B-8298-9202ACE0B82F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab3_Ozierski_Train", "Lab3_Ozierski_Train\Lab2_Ozierski_Train.csproj", "{81B5376A-2BB2-4585-8E00-776DD25408A5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab3_Ozierski_Train", "Lab3_Ozierski_Train\Lab3_Ozierski_Train.csproj", "{81B5376A-2BB2-4585-8E00-776DD25408A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Lab2_Ozierski_Train.Storage
 {
-    public class TextFormater : BaseFormater
+    public class TextFormatter : BaseFormater
     {
         private StreamWriter sw;
         private StreamReader sr;
@@ -14,7 +14,7 @@ namespace Lab2_Ozierski_Train.Storage
         {
             sw = new StreamWriter(stream);
             sw.WriteLine(train.Number);
-            sw.Write(train.Coaches.Count);
+            sw.WriteLine(train.Coaches.Count);
             foreach (Coach coach in train)
                 WriteCoach(coach);
             sw.Close();
@@ -22,16 +22,17 @@ namespace Lab2_Ozierski_Train.Storage
 
         protected override void WriteCoach(Coach coach)
         {
-            sw.Write(coach.Type);
-            sw.Write(coach.Rooms.Count);
+            sw.WriteLine(coach.Id);
+            sw.WriteLine((int)coach.Type);
+            sw.WriteLine(coach.Rooms.Count());
             foreach (Room room in coach)
                 WriteRoom(room);
         }
 
         protected override void WriteRoom(Room room)
         {
-            sw.Write(room.PassengerLimit);
-            sw.Write(room.PassengerCount);
+            sw.WriteLine(room.PassengerLimit);
+            sw.WriteLine(room.PassengerCount);
         }
 
 
@@ -39,23 +40,24 @@ namespace Lab2_Ozierski_Train.Storage
         {
             sr = new StreamReader(stream);
             Train train = new Train(Int32.Parse(sr.ReadLine()));
-            for (int i = 0; i < sr.Read(); i++)
+            int count = Int32.Parse(sr.ReadLine());
+            for (int i = 0; i < count; i++)
                 train.AddCoach(ReadCoach());
             return train;
         }
 
         protected override Coach ReadCoach()
         {
-            Coach coach = new Coach(sr.Read(), (CoachType)sr.Read());
-            for (int i = 0; i < sr.Read(); i++)
+            Coach coach = new Coach(Int32.Parse(sr.ReadLine()), (CoachType)Int32.Parse(sr.ReadLine()));
+            int count = Int32.Parse(sr.ReadLine());
+            for (int i = 0; i < count; i++)
                 coach.AddRoom(ReadRoom());
             return coach;
         }
 
         protected override Room ReadRoom()
         {
-            Room room = new Room(sr.Read());
-            room.PassengerCount = sr.Read();
+            Room room = new Room(Int32.Parse(sr.ReadLine()), Int32.Parse(sr.ReadLine()));
             return room;
         }
     }

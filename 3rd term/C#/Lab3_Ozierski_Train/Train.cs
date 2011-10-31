@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace Lab2_Ozierski_Train
 {
@@ -76,6 +77,12 @@ namespace Lab2_Ozierski_Train
         {
             Coaches.Add(coach);
         }
+
+        public void AddRoom(int coach_id, Room room)
+        {
+            Coach coach = Coaches.Where<Coach>(x => x.Id == coach_id).First();
+            coach.AddRoom(room);
+        }
 		
 		public int GetCoachCount()
 		{
@@ -105,7 +112,11 @@ namespace Lab2_Ozierski_Train
 		
 		public override string ToString()
 		{
-			return "Train: " + Number;
+            string res = "Train number: " + Number + "\n";
+            foreach (Coach coach in Coaches)
+                res += coach;
+            return res;
 		}
+
     }
 }

@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Lab2_Ozierski_Train.Storage
 {
-    class BinaryFormater : BaseFormater
+    class BinaryFormatter : BaseFormater
     {
         private BinaryWriter sw;
         private BinaryReader sr;
@@ -22,6 +22,7 @@ namespace Lab2_Ozierski_Train.Storage
 
         protected override void WriteCoach(Coach coach)
         {
+            sw.Write(coach.Id);
             sw.Write((byte)coach.Type);
             sw.Write(coach.Rooms.Count);
             foreach (Room room in coach)
@@ -37,24 +38,25 @@ namespace Lab2_Ozierski_Train.Storage
         public override Train ReadTrain(Stream stream)
         {
             sr = new BinaryReader(stream);
-            Train train = new Train(sr.Read());
-            for (int i = 0; i < sr.Read(); i++)
+            Train train = new Train(sr.ReadInt32());
+            int count = sr.ReadInt32();
+            for (int i = 0; i < count; i++)
                 train.AddCoach(ReadCoach());
             return train;
         }
 
         protected override Coach ReadCoach()
         {
-            Coach coach = new Coach(sr.Read(), (CoachType)sr.Read());
-            for (int i = 0; i < sr.Read(); i++)
+            Coach coach = new Coach(sr.ReadInt32(), (CoachType)sr.ReadByte());
+            int count = sr.ReadInt32();
+            for (int i = 0; i < count; i++)
                 coach.AddRoom(ReadRoom());
             return coach;
         }
 
         protected override Room ReadRoom()
         {
-            Room room = new Room(sr.Read());
-            room.PassengerCount = sr.Read();
+            Room room = new Room(sr.ReadInt32(), sr.ReadInt32());
             return room;
         }
     }

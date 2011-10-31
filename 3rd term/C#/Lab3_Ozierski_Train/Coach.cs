@@ -16,6 +16,7 @@ namespace Lab2_Ozierski_Train
         {
             Id = id;
             Type = ct;
+            Rooms = new List<Room>();
         }
 
         
@@ -117,7 +118,11 @@ namespace Lab2_Ozierski_Train
 		
 		public override string ToString()
 		{
-			return Rooms.Count().ToString();
+            string res = "Coach id: " + Id;
+            res += "\nCoach type: " + Type + "\n";
+            foreach (Room room in Rooms)
+                res += room;
+            return res + "\n";
 		}
     }
 
