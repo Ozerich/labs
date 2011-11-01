@@ -6,6 +6,11 @@ using System.IO;
 using Lab2_Ozierski_Train.Storage;
 using System.Security.Cryptography;
 using System.Threading;
+using Lab2_Ozierski_Train.XML;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.Serialization;
+using Lab2_Ozierski_Train.Serialization;
 
 namespace Lab2_Ozierski_Train
 {
@@ -13,7 +18,7 @@ namespace Lab2_Ozierski_Train
     {
         static void Main(string[] args)
         {
-            FileWatcher.Init(".", "*.*");
+          //  FileWatcher.Init(".", "*.*");
 
             Train train = new Train(5);
 
@@ -69,7 +74,43 @@ namespace Lab2_Ozierski_Train
                 Thread.Sleep(200);
                 File.Move("train.dat", "train_renamed.dat");
             }
-           
+
+            DomXml domxml = new DomXml();
+            XmlDocument xml = domxml.SaveTrain(train);
+            XDocument doc = XDocument.Parse(xml.OuterXml);
+            TextWriter writer = new StreamWriter("train_dom.xml");
+            writer.Write(doc.ToString());
+            writer.Close();
+
+            LinqXml linqxml = new LinqXml();
+            doc = linqxml.SaveTrain(train);
+            writer = new StreamWriter("train_linq.xml");
+            writer.Write(doc.ToString());
+            writer.Close();
+
+            BinarySerialization bs = new BinarySerialization();
+            FileStream fs = new FileStream("binary.dat", FileMode.Create);
+            bs.Serialize(fs, train);
+            fs.Close();
+
+            fs = new FileStream("binary.dat", FileMode.Open);
+            Console.WriteLine("\nBinary deserializaton:");
+            Console.WriteLine(bs.Deserialize(fs));
+            fs.Close();
+
+
+            XmlSerialization xs = new XmlSerialization();
+            fs = new FileStream("xml_s.xml", FileMode.Create);
+            xs.Serialize(fs, train);
+            fs.Close();
+
+        /*    fs = new FileStream("xml_s.xml", FileMode.Open);
+            Console.WriteLine("\nXML deserializaton:");
+            Console.WriteLine(xs.Deserialize(fs));
+            fs.Close();*/
+
+
+            
 
 
             Console.ReadLine();
