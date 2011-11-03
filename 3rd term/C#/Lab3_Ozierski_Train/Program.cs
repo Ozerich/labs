@@ -104,13 +104,10 @@ namespace Lab2_Ozierski_Train
             xs.Serialize(fs, train);
             fs.Close();
 
-        /*    fs = new FileStream("xml_s.xml", FileMode.Open);
+            fs = new FileStream("xml_s.xml", FileMode.Open);
             Console.WriteLine("\nXML deserializaton:");
             Console.WriteLine(xs.Deserialize(fs));
-            fs.Close();*/
-
-
-            
+            fs.Close();
 
 
             Console.ReadLine();
