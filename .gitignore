@@ -6,7 +6,6 @@ Debug/
 *.~*
 *.dcu
 *.dfm
-*.exe
 *.res
 *.dof
 *.cfg
@@ -23,4 +22,5 @@ Debug/
 *.opensdf
 *.rar
 *.gch
+*.exe
 *.autosave
