@@ -1,4 +1,4 @@
 PATH=MASM\BIN\
 MASM\BIN\MASM lab5.asm
 MASM\BIN\LINK16 lab5.obj
-CV\CV lab5.exe
+LAB5
