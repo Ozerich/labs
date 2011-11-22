@@ -19,7 +19,7 @@ namespace Lab5_Ozierski_PluginApplication
         public LongNumber DoOp(LongNumber number1, LongNumber number2)
         {
             LongNumber res = number1;
-            int ost = 0, sum, up;
+            int ost = 0, sum;
             int i = 0;
             for (; i < Math.Max(number2.num_len, number1.num_len); i++)
             {
