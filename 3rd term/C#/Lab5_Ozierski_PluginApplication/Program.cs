@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Reflection;
+using System.Configuration;
 
 namespace Lab5_Ozierski_PluginApplication
 {
@@ -14,7 +15,8 @@ namespace Lab5_Ozierski_PluginApplication
         static void FindPlugins()
         {
             plugins = new List<IPlugin>(10);
-            string folder = System.AppDomain.CurrentDomain.BaseDirectory;
+
+            string folder = System.AppDomain.CurrentDomain.BaseDirectory + ConfigurationManager.AppSettings["PluginDirectory"] + "\\";
 
             string[] files = Directory.GetFiles(folder, "*.dll");
 
@@ -72,7 +74,11 @@ namespace Lab5_Ozierski_PluginApplication
                         case 3:
                             int i = 1;
                             foreach (IPlugin plugin in plugins)
-                                Console.WriteLine(i++ + "- " + plugin.Name);
+                            {
+                                var pluginName = Attribute.GetCustomAttribute(plugin.GetType(), typeof(PluginNameAttribute));
+                                PluginNameAttribute atr = (PluginNameAttribute)pluginName;
+                                Console.WriteLine(i++ + "- " + atr.Name);
+                            }
                             Console.Write("Your action: ");
                             try
                             {
@@ -82,7 +88,7 @@ namespace Lab5_Ozierski_PluginApplication
                                 Console.WriteLine("\nResult: " + res);
 
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
                                 Console.WriteLine("Incorrect operation");
                             }
@@ -94,7 +100,7 @@ namespace Lab5_Ozierski_PluginApplication
                             throw new FormatException();
                     }
                 }
-                catch (FormatException ex)
+                catch (FormatException)
                 {
                     Console.WriteLine("Input error! Try Again");
                 }

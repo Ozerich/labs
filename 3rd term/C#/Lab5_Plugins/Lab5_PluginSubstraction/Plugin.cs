@@ -5,16 +5,9 @@ using System.Text;
 
 namespace Lab5_Ozierski_PluginApplication
 {
+    [PluginName("Substraction")]
     public class SubstractPlugin : IPlugin
     {
-        public string Name
-        {
-            get
-            {
-                return "Substraction";
-            }
-        }
-
         public string Author
         {
             get
