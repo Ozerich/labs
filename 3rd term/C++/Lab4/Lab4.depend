@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1323076816 source:/home/ozerich/work/Programming-labs/3rd term/C++/Lab4/main.cpp
+	<cstdio>
+	<iostream>
+	<cstdlib>
+	"list.h"
+	"time.h"
+
+1323075718 /home/ozerich/work/Programming-labs/3rd term/C++/Lab4/list.h
+

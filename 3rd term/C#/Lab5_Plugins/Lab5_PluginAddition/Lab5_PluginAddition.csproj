@@ -44,9 +44,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Lab5_Ozierski_LongNumber\Lab5_Ozierski_LongNumber.csproj">
+      <Project>{25549166-A673-4AC8-B290-0669DCFDB576}</Project>
+      <Name>Lab5_Ozierski_LongNumber</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Lab5_Ozierski_PluginApplication\Lab5_Ozierski_PluginApplication.csproj">
       <Project>{A18B2484-60E9-4AD9-856C-D4A8B57CE52D}</Project>
       <Name>Lab5_Ozierski_PluginApplication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lab5_Ozierski_PluginInterface\Lab5_Ozierski_PluginInterface.csproj">
+      <Project>{661E30AB-5D13-46CB-9116-6E6FE48906E2}</Project>
+      <Name>Lab5_Ozierski_PluginInterface</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

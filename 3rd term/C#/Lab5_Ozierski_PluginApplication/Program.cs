@@ -18,7 +18,7 @@ namespace Lab5_Ozierski_PluginApplication
 
             string folder = System.AppDomain.CurrentDomain.BaseDirectory + ConfigurationManager.AppSettings["PluginDirectory"] + "\\";
 
-            string[] files = Directory.GetFiles(folder, "*.dll");
+            string[] files = Directory.GetFiles(folder, "*.*", SearchOption.AllDirectories);
 
             foreach (string filename in files)
             {
@@ -69,22 +69,22 @@ namespace Lab5_Ozierski_PluginApplication
                             break;
                         case 2:
                             Console.Write("Number: ");
-                            num_b = new LongNumber(Console.ReadLine());;
+                            num_b = new LongNumber(Console.ReadLine()); ;
                             break;
                         case 3:
                             int i = 1;
-                            foreach (IPlugin plugin in plugins)
-                            {
-                                var pluginName = Attribute.GetCustomAttribute(plugin.GetType(), typeof(PluginNameAttribute));
-                                PluginNameAttribute atr = (PluginNameAttribute)pluginName;
-                                Console.WriteLine(i++ + "- " + atr.Name);
-                            }
-                            Console.Write("Your action: ");
                             try
                             {
+                                foreach (IPlugin plugin in plugins)
+                                {
+                                    var pluginName = Attribute.GetCustomAttribute(plugin.GetType(), typeof(PluginNameAttribute));
+                                    PluginNameAttribute atr = (PluginNameAttribute)pluginName;
+                                    Console.WriteLine(i++ + "- " + atr.Name);
+                                }
+                                Console.Write("Your action: ");
                                 int op = Int32.Parse(Console.ReadLine());
-                                IPlugin plugin = plugins[op - 1];
-                                LongNumber res = plugin.DoOp(num_a, num_b);
+                                IPlugin plug = plugins[op - 1];
+                                LongNumber res = plug.DoOp(num_a, num_b);
                                 Console.WriteLine("\nResult: " + res);
 
                             }
