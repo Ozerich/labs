@@ -56,7 +56,7 @@ namespace Lab6_Player
         public void Save()
         {
             BinaryFormatter bf = new BinaryFormatter();
-            using (FileStream f = new FileStream(GetFilePath(Name), FileMode.Truncate))
+            using (FileStream f = new FileStream(GetFilePath(Name), FileMode.OpenOrCreate))
                 bf.Serialize(f, this);
         }
 

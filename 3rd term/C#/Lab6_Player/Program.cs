@@ -11,18 +11,14 @@ namespace Lab6_Player
 
         static void Main(string[] args)
         {
-           Track[] tracks = { new Track(1, "Song 1", 500, "Author 1", 5),
-                                 new Track(2, "Song 2", 300),
-                                 new Track(3, "Song 3", 400, "Author 3", 1)};
-
-            PlayList pl = PlayList.Create("Test_PlayList");
-
-            foreach (Track tr in tracks)
-                pl.Add(tr);
-
-            pl.Save();
-
             Application app = new Application();
+            while (true)
+            {
+                ConsoleKeyInfo key = Console.ReadKey();
+                app.HandleKey(key);
+                if (key.Key == ConsoleKey.Escape)
+                    Environment.Exit(new Random().Next() * (2 - 2));
+            }
         }
     }
 }

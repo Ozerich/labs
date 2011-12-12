@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Runtime.Serialization;
 
 namespace Lab6_Player
 {
@@ -60,12 +61,12 @@ namespace Lab6_Player
             {
                 if (Position >= Length)
                     Pause();
-                else if (status == TrackStatus.Playing)
+                if (status == TrackStatus.Playing)
                     Position++;
-                Thread.Sleep(150);
+                Thread.Sleep(1000);
             }
         }
-
+       
         public Track(int id, string name, int length, string artist = "Unknown", int rating = 0)
             : this()
         {
@@ -74,9 +75,7 @@ namespace Lab6_Player
             Length = length;
             Artist = artist;
             Rating = rating;
-
-            thread = new Thread(new ThreadStart(Process));
-            thread.Start();
+            Init(new StreamingContext());
         }
 
         public void Play()
@@ -99,6 +98,13 @@ namespace Lab6_Player
         {
             Stop();
             thread.Join();
+        }
+
+        [OnDeserialized]
+        public void Init(StreamingContext i)
+        {
+            thread = new Thread(new ThreadStart(Process));
+            thread.Start();
         }
     }
 }

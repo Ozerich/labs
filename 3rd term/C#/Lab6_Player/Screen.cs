@@ -24,11 +24,11 @@ namespace Lab6_Player
 
         static Screen()
         {
-            Console.SetWindowSize(80, 51);
-            Console.SetBufferSize(80, 51);
+            Console.SetWindowSize(80, 31);
+            Console.SetBufferSize(80, 31);
             Console.CursorVisible = false;
 
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 30; i++)
             {
                 buffer[i] = new StringBuilder(80);
                 for(int j = 0; j < 80; j++)
@@ -41,7 +41,7 @@ namespace Lab6_Player
 
         public static void Flush()
         {
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 30; i++)
             {
                 Console.SetCursorPosition(0, i);
                 Console.Write(buffer[i]);
