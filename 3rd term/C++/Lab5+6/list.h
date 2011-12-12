@@ -8,6 +8,7 @@ struct ListItem{
 public:
     T value;
     ListItem<T> *next;
+	ListItem(){}
     ListItem(T val)
     {
         value = val;
@@ -140,7 +141,7 @@ public:
         Remove(find(val));
     }
 
-    void Add(int val)
+    void Add(T val)
     {
         ListItem<T> *newElem = new ListItem<T>(val);
         newElem->next = root;

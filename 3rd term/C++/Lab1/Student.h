@@ -13,14 +13,17 @@ private:
 	char *name;
 	char *surname;
 	char *group;
+
+	int age;
 public:
 	Student();
 	Student(Student &);
-	Student(const char* , const char* , const char* );
+	Student(const char* , const char* , const char*, int);
 
 	void SetName(const char *);
 	void SetSurname(const char *);
 	void SetGroup(const char *);
+	void SetAge(const int);
 
 	char* GetName();
 	char* GetSurname();

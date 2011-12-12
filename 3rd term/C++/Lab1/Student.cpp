@@ -4,11 +4,12 @@ Student::Student()
 {
 }
 
-Student::Student(const char* name, const char* surname, const char* group)
+Student::Student(const char* name, const char* surname, const char* group, int age)
 {
 	SetName(name);
 	SetSurname(surname);
 	SetGroup(group);
+	SetAge(age);
 	cout << "Constuctor for " << name << " " << surname << " runned" << endl << endl;
 }
 
@@ -18,6 +19,11 @@ Student::Student(Student &student)
 	SetSurname(student.GetSurname());
 	SetGroup(student.GetGroup());
 	cout << "Constuctor(copy) for " << name << " " << surname << " runned" << endl << endl;
+}
+
+void Student::SetAge(const int _age)
+{
+	age = _age;
 }
 
 void Student::SetName(const char *name)

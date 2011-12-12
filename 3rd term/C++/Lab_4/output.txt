@@ -1,0 +1,20 @@
+Student with age above 19: 
+
+Student's name: Petya
+Student's surname: Ivanov
+Student's group: 052004
+Age: 20
+
+Student's name: Imya
+Student's surname: Bezfamilny
+Student's group: 052001
+Age: 21
+
+
+Student with age below 19: 
+
+Student's name: Vasya
+Student's surname: Petrov
+Student's group: 052003
+Age: 18
+
