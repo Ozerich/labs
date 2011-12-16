@@ -1,4 +1,3 @@
 PATH=MASM\BIN\
-MASM\BIN\MASM lab6.asm
-MASM\BIN\LINK16 lab6.obj
-CV\CV lab6
+MASM\BIN\MASM lab7.asm
+MASM\BIN\LINK16 lab7.obj
