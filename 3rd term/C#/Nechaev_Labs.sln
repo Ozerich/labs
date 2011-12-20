@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab1_Nechaev_Students", "Lab1_Nechaev_Students\Lab1_Nechaev_Students.csproj", "{C548B18E-00B5-4E48-AFB7-95CA543E716A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab2_Nechaev_Planes", "Lab2_Nechaev_Planes\Lab2_Nechaev_Planes.csproj", "{0742B22B-B2AB-4865-8D27-EEF257135D11}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C548B18E-00B5-4E48-AFB7-95CA543E716A}.Debug|x86.ActiveCfg = Debug|x86
+		{C548B18E-00B5-4E48-AFB7-95CA543E716A}.Debug|x86.Build.0 = Debug|x86
+		{C548B18E-00B5-4E48-AFB7-95CA543E716A}.Release|x86.ActiveCfg = Release|x86
+		{C548B18E-00B5-4E48-AFB7-95CA543E716A}.Release|x86.Build.0 = Release|x86
+		{0742B22B-B2AB-4865-8D27-EEF257135D11}.Debug|x86.ActiveCfg = Debug|x86
+		{0742B22B-B2AB-4865-8D27-EEF257135D11}.Debug|x86.Build.0 = Debug|x86
+		{0742B22B-B2AB-4865-8D27-EEF257135D11}.Release|x86.ActiveCfg = Release|x86
+		{0742B22B-B2AB-4865-8D27-EEF257135D11}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
