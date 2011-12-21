@@ -1,0 +1,6 @@
+Minsk Moscow
+2 30 200 Derevnya
+6 150 500 Mogileu
+10 300 900 Smolensk
+15 600 200 Kreml
+17 610 0 Moscow(Sheremetevo-0)

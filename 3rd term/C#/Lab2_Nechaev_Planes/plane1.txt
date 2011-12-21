@@ -1,0 +1,5 @@
+Minsk Gomel
+3 50 200 Derevnya
+7 150 500 Bobruisk
+15 300 900 Kolhoz
+30 600 1500 Gomel
