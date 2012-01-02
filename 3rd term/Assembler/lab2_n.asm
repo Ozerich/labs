@@ -18,10 +18,8 @@
   file_handle dw ?
   
   
-  ;infile db 256 dup(0)
-  infile db 'C:\input.txt', 0
-  ;outfile db 256 dup(0)
-  outfile db 'C:\output.txt', 0
+  infile db 256 dup(0)
+  outfile db 256 dup(0)
 
   delimetrs db ' ,.:()',0
   delimetrs_len dw 6
@@ -121,6 +119,21 @@ open_error:
   ret    
 read_file endp
 
+clear_word_1 proc
+  
+  xor di, di
+  
+  clear_word_1_cycle:
+      
+      cmp [word_1 + di], 0 
+      je exit_clear_word_1
+      mov [word_1 + di], 0
+      inc di
+      jmp clear_word_1_cycle
+
+exit_clear_word_1:
+  ret
+clear_word_1 endp
 
 clear_word_2 proc
   
@@ -137,6 +150,22 @@ clear_word_2 proc
 exit_clear_word_2:
   ret
 clear_word_2 endp
+
+clear_old_word_1 proc
+  
+  xor di, di
+  
+  clear_old_word_1_cycle:
+      
+      cmp [old_word_1  + di], 0 
+      je exit_old_word_1
+      mov [old_word_1  + di], 0
+      inc di
+      jmp clear_old_word_1_cycle
+
+exit_old_word_1:
+  ret
+clear_old_word_1 endp
 
 
 is_delimetr proc
@@ -224,6 +253,8 @@ final_swap proc
   mov [word_1_len], si
   
   mov si, old_word_2_textpos 
+  cmp si,0
+  je exit_final_swap
   xor di, di
 
   final_swap_cycle_2:
@@ -253,16 +284,22 @@ final_swap proc
     dec di
     cmp di, 0
     jnz clear_cycle
+	
+  mov si, [word_1_len]
+  mov [old_word_1 + si], 20h
+  inc si
+  mov [word_1_len], si
+  
 
   mov si, [word_1_len]
   mov di, [word_2_len]
   cmp si, di
-  jbe do_fill
+  jna do_fill
   
   mov ax, si
   sub ax, di
 
-  mov si, 21
+  mov si, 999
   sub si, ax
   
 
@@ -277,10 +314,11 @@ final_swap proc
       mov [file_text + di], cl
       sub di, 2
       cmp di, si
-      jne sdvig_in_cycle
+      jge sdvig_in_cycle
 
     cmp si, old_word_2_textpos
     jne sdvig_cycle
+	
   
 
   do_fill:
@@ -296,7 +334,18 @@ final_swap proc
       inc si
       cmp [old_word_1 + di], 0
       jne do_fill_cycle
-
+	
+	cmp di, [word_2_len]
+	jae exit_final_swap
+	
+	fill_spaces_cycle:
+		inc di
+		mov [file_text + si], 20h
+		inc si
+		cmp di, [word_2_len]
+		jne fill_spaces_cycle
+	  
+exit_final_swap:
   ret
 final_swap endp
 
@@ -313,10 +362,12 @@ cycle_1:
   call trim
   pop si
 
+  call clear_old_word_1
+
   xor di, di
-
+  
   first_word_cycle:
-
+	
     mov bl, [file_text + si]
     mov [word_1 + di], bl
     mov [old_word_1 + di], bl
@@ -336,7 +387,8 @@ cycle_1:
     cmp bx, 0
     je first_word_cycle
 
-
+	mov [old_word_2_textpos], 0
+	
   cycle_2:
 
     push si
@@ -405,6 +457,7 @@ cycle_1:
     push ax
     call final_swap
     pop ax
+	call clear_word_1
     jmp cycle_1
     
 
@@ -436,7 +489,7 @@ main:
   mov ds, ax
   mov es, ax
 
- ; call input_filenames
+  call input_filenames
   call read_file
   call sort_file
   call write_file
