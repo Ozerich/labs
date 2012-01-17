@@ -1,3 +1,6 @@
+;For Bogdan Nechaev 
+;Sort words in file and write result to file
+
 .model small
 .stack 100h
 

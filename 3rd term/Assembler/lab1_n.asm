@@ -1,3 +1,5 @@
+;For Bogdan Nechaev "Date"
+
 .model small
 .stack 100h
 .data
@@ -161,11 +163,11 @@ add AL, BL
 mov [seconds], AX
 
 mov AX, [hours]
-cmp [hours], 23h
+cmp [hours], 23
 jg bad_hours
-cmp [minutes], 59h
+cmp [minutes], 59
 jg bad_minutes
-cmp [seconds], 59h
+cmp [seconds], 59
 jg bad_seconds
 
 mov AH, 9h
