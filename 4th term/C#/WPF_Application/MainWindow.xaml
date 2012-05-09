@@ -1,0 +1,19 @@
+﻿<Window x:Class="WPF_Application.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Label Margin="11,9,391,271" Width="100">Категории:</Label>
+        <ComboBox Margin="96,12,0,0" Name="ComboBox1" HorizontalAlignment="Left"
+         VerticalAlignment="Top" Width="194" Height="19">
+            <ComboBoxItem Content="Coffie"></ComboBoxItem>
+            <ComboBoxItem Content="Tea"></ComboBoxItem>
+            <ComboBoxItem Content="Orange Juice"></ComboBoxItem>
+            <ComboBoxItem Content="Milk"></ComboBoxItem>
+            <ComboBoxItem Content="Iced Tea"></ComboBoxItem>
+            <ComboBoxItem Content="Mango Shake"></ComboBoxItem>
+        </ComboBox>
+        <Button Name="AddButton" Width="80" Height="25"
+    Content="Open" Margin="315,9,108,276" />
+    </Grid>
+</Window>

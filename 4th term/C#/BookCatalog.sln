@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{8166CD4D-4C2C-486A-B1CA-E0E8147B9FA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data Access Layer", "DAL\Data Access Layer.csproj", "{634D6EA4-C3BB-48DF-BA3B-E97FE59A403F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business Logic Layer", "BLL\Business Logic Layer.csproj", "{694331A7-BD15-40D5-99DF-FD8E23E8242D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF_Application", "WPF_Application\WPF_Application.csproj", "{4E84B5F1-16AF-4C90-BE01-0EABB58CFF56}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8166CD4D-4C2C-486A-B1CA-E0E8147B9FA8}.Debug|x86.ActiveCfg = Debug|x86
+		{8166CD4D-4C2C-486A-B1CA-E0E8147B9FA8}.Debug|x86.Build.0 = Debug|x86
+		{8166CD4D-4C2C-486A-B1CA-E0E8147B9FA8}.Release|x86.ActiveCfg = Release|x86
+		{8166CD4D-4C2C-486A-B1CA-E0E8147B9FA8}.Release|x86.Build.0 = Release|x86
+		{634D6EA4-C3BB-48DF-BA3B-E97FE59A403F}.Debug|x86.ActiveCfg = Debug|x86
+		{634D6EA4-C3BB-48DF-BA3B-E97FE59A403F}.Debug|x86.Build.0 = Debug|x86
+		{634D6EA4-C3BB-48DF-BA3B-E97FE59A403F}.Release|x86.ActiveCfg = Release|x86
+		{634D6EA4-C3BB-48DF-BA3B-E97FE59A403F}.Release|x86.Build.0 = Release|x86
+		{694331A7-BD15-40D5-99DF-FD8E23E8242D}.Debug|x86.ActiveCfg = Debug|x86
+		{694331A7-BD15-40D5-99DF-FD8E23E8242D}.Debug|x86.Build.0 = Debug|x86
+		{694331A7-BD15-40D5-99DF-FD8E23E8242D}.Release|x86.ActiveCfg = Release|x86
+		{694331A7-BD15-40D5-99DF-FD8E23E8242D}.Release|x86.Build.0 = Release|x86
+		{4E84B5F1-16AF-4C90-BE01-0EABB58CFF56}.Debug|x86.ActiveCfg = Debug|x86
+		{4E84B5F1-16AF-4C90-BE01-0EABB58CFF56}.Debug|x86.Build.0 = Debug|x86
+		{4E84B5F1-16AF-4C90-BE01-0EABB58CFF56}.Release|x86.ActiveCfg = Release|x86
+		{4E84B5F1-16AF-4C90-BE01-0EABB58CFF56}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
