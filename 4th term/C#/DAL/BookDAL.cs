@@ -26,7 +26,11 @@ namespace DAL
         {
             XDocument doc = XDocument.Load(UserDal.fileName);
 
-            doc.Root.Add(new XElement("Category", new XElement("Name", name)));
+            int id = 1;
+            foreach (XElement cat in doc.Root.Elements())
+                id = Math.Max(id, Int32.Parse(cat.Attribute("ID").Value));
+
+            doc.Root.Add(new XElement("Category", new XAttribute("ID", id), new XElement("Name", name)));
             doc.Save(UserDal.fileName);
         }
 
@@ -35,6 +39,12 @@ namespace DAL
             XDocument doc = XDocument.Load(UserDal.fileName);
 
             int catId = 0;
+            int bookId = 1;
+
+            foreach (XElement category in doc.Root.Elements())
+                foreach (XElement bookElem in category.Elements())
+                    bookId = Math.Max(bookId, Int32.Parse(bookElem.Attribute("ID").Value));
+            bookId++;
 
             foreach (XElement category in doc.Root.Elements())
             {
@@ -71,8 +81,9 @@ namespace DAL
                     continue;
 
                 category.Remove();
+            
             }
-        
+       
 
             doc.Save(BookDal.fileName);
         }
@@ -95,12 +106,46 @@ namespace DAL
 
         public void UpdateCategory(Guid Id, BookCategory cat)
         {
-            
+            XDocument doc = XDocument.Load(BookDal.fileName);
+
+            foreach(XElement category in doc.Root.Elements())
+                if (category.Attribute("ID").Value == Id.ToString())
+                {
+                    category.SetElementValue("Name", cat.Name);
+                    break;
+                }
+
+            doc.Save(BookDal.fileName);
         }
 
         public void UpdateBook(Guid Id, Book book)
         {
+            XDocument doc = XDocument.Load(BookDal.fileName);
 
+            foreach(XElement category in doc.Root.Elements())
+                foreach (XElement bookElem in category.Elements())
+                    if (bookElem.Attribute("ID").Value == Id.ToString())
+                    {
+                        bookElem.SetElementValue("Title", book.Title);
+                        bookElem.SetElementValue("Year", book.Year);
+                        bookElem.SetElementValue("Pages", book.PagesCount);
+                        bookElem.SetElementValue("Format", book.FileFormat);
+                        bookElem.SetElementValue("Publication", book.Publication);
+                        bookElem.SetElementValue("Author", book.Author);
+                    }
+
+            doc.Save(BookDal.fileName);
+        }
+
+        public static List<BookCategory> GetCategories()
+        {
+            XDocument doc = XDocument.Load(BookDal.fileName);
+            List<BookCategory> result = new List<BookCategory>();
+
+            foreach (XElement category in doc.Root.Elements())
+                result.Add(new BookCategory(Int32.Parse(category.Attribute("ID").Value), category.Element("Name").Value));
+
+            return result;
         }
     }
 }

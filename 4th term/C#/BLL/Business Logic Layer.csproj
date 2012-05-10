@@ -37,6 +37,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Books.cs" />
     <Compile Include="Users.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -33,5 +33,22 @@ namespace WPF_Application
         {
             this.user = user;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NewBook newBookWnd = new NewBook();
+            newBookWnd.Activate();
+            newBookWnd.ShowDialog();
+        }
+
+        private void UpdateCategories()
+        {
+            List<BookCategory> categories = Books.GetCategories();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateCategories();
+        }
     }
 }

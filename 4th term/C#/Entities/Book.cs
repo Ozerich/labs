@@ -7,13 +7,14 @@ namespace Entities
 {
     public class Book
     {
+        
         private int year;
         private int pagesCount;
 
         /// <summary>
         /// Book Identificator
         /// </summary>
-        public Guid ID
+        public int ID
         {
             get;
             set;
@@ -84,6 +85,12 @@ namespace Entities
         /// Publication Information
         /// </summary>
         public string Publication
+        {
+            get;
+            set;
+        }
+
+        public Guid UserId
         {
             get;
             set;

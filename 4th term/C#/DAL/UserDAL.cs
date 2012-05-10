@@ -55,27 +55,32 @@ namespace DAL
 
 
 
-        public void UpdateUser(User user)
-        {
-
-        }
-
-        public User GetUser(Guid user)
-        {
-            return new User("","");
-        }
-
         public void DeleteUser(User user)
         {
+            XDocument doc = XDocument.Load(UserDal.fileName);
 
+            foreach(XElement userElem in doc.Root.Elements())
+                if (userElem.Element("Login").Value == user.Login)
+                {
+                    userElem.Remove();
+                    break;
+                }
+
+            doc.Save(UserDal.fileName);
         }
 
-        public static Dictionary<string, string> GetUsers()
+        public void UpdateUser(User user)
         {
-            Dictionary<string, string> users = new Dictionary<string, string>();
+            XDocument doc = XDocument.Load(UserDal.fileName);
 
+            foreach(XElement userElem in doc.Root.Elements())
+                if (userElem.Element("Login").Value == user.Login)
+                {
+                    userElem.SetElementValue("Password", user.Password);
+                }
 
-            return users;
+            doc.Save(UserDal.fileName);
         }
+
     }
 }

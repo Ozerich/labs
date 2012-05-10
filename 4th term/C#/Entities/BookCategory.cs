@@ -7,7 +7,13 @@ namespace Entities
 {
     public class BookCategory
     {
-        public Guid Id { get; private set; }
+        public int Id { get; private set; }
         public string Name { get; set; }
+
+        public BookCategory(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
     }
 }
