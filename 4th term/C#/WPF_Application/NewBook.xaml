@@ -5,6 +5,31 @@
     <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
         <TextBlock FontSize="20" Padding="20 10 0 10">Book Title</TextBlock>
         <TextBox Name="Title" Background="Azure" Margin="20 0 0 10" Width="600"></TextBox>
-        <Button Width="100" Height="30" Margin="10 0 0 10">Создать</Button>
+
+        <TextBlock FontSize="20" Padding="20 10 0 10">Book Author</TextBlock>
+        <TextBox Name="Author" Background="Azure" Margin="20 0 0 10" Width="600"></TextBox>
+
+        <StackPanel Orientation="Horizontal">
+            
+            <StackPanel Orientation="Vertical">
+                <TextBlock FontSize="20" Padding="20 10 0 10">Pages</TextBlock>
+                <TextBox Name="Pages" Background="Azure" Margin="20 0 0 10" Width="75"></TextBox>
+            </StackPanel>
+            
+            <StackPanel Orientation="Vertical">
+                <TextBlock FontSize="20" Padding="20 10 0 10">Year</TextBlock>
+                <TextBox Name="Year" Background="Azure" Margin="20 0 0 10" Width="75" HorizontalAlignment="Left"></TextBox>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical">
+                <TextBlock FontSize="20" Padding="20 10 0 10">Publication</TextBlock>
+                <TextBox Name="Publication" Background="Azure" Margin="20 0 0 10" Width="410"></TextBox>
+            </StackPanel>
+            
+        </StackPanel>
+
+        <Button Width="100" Height="30" Margin="10 0 0 10" Click="Button_Click">Add</Button>
+        
+        
     </StackPanel>
 </Window>

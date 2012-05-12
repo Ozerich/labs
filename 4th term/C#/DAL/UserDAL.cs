@@ -55,7 +55,7 @@ namespace DAL
 
 
 
-        public void DeleteUser(User user)
+        public static void DeleteUser(User user)
         {
             XDocument doc = XDocument.Load(UserDal.fileName);
 
@@ -69,7 +69,7 @@ namespace DAL
             doc.Save(UserDal.fileName);
         }
 
-        public void UpdateUser(User user)
+        public static void UpdateUser(User user)
         {
             XDocument doc = XDocument.Load(UserDal.fileName);
 

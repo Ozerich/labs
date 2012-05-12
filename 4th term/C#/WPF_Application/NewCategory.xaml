@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="New Book" Width="700" ResizeMode="NoResize" Background="Gray" Foreground="Azure" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" SizeToContent="Height">
     <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
-        <TextBlock FontSize="20" Padding="20 10 0 10">Book Title</TextBlock>
+        <TextBlock FontSize="20" Padding="20 10 0 10">Category Title</TextBlock>
         <TextBox Name="Title"  Background="Azure" Margin="20 0 0 10" Width="600"></TextBox>
-        <Button Width="100" Height="30" Margin="10 0 0 10">Создать</Button>
+        <Button Width="100" Height="30" Margin="10 0 0 10" Click="Button_Click">Создать</Button>
     </StackPanel>
 </Window>

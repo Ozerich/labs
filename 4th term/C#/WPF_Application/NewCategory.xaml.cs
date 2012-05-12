@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BLL;
 
 namespace WPF_Application
 {
@@ -18,9 +19,28 @@ namespace WPF_Application
     /// </summary>
     public partial class NewCategory : Window
     {
-        public NewCategory()
+        private MainWindow mainWnd;
+
+        public NewCategory(MainWindow _mainWnd)
         {
             InitializeComponent();
+            mainWnd = _mainWnd;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Books.AddCategory(Title.Text);
+                mainWnd.UpdateCategories();
+                MessageBox.Show("Category is added");
+                this.Close();
+                
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
