@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BLL;
+using Entities;
 
 namespace WPF_Application
 {
@@ -19,23 +20,75 @@ namespace WPF_Application
     /// </summary>
     public partial class NewBook : Window
     {
-        private int catId;
+        private int catId, bookId;
         private MainWindow mainWnd;
 
-        public NewBook(int _catId, MainWindow _mainWnd)
+        public NewBook(int _catId, MainWindow _mainWnd, int _bookId = 0)
         {
             InitializeComponent();
             catId = _catId;
             mainWnd = _mainWnd;
+            bookId = _bookId;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<BookCategory> categories = Books.GetCategories();
+
+            CategoriesList.ItemsSource = categories;
+            CategoriesList.SelectedIndex = 0;
+
+            BookFormat.ItemsSource = Enum.GetValues(typeof(EnumFileFormat));
+            BookFormat.SelectedIndex = 0;
+
+            if (bookId != 0)
+            {
+                Book book = Books.GetBook(bookId);
+
+                BookTitle.Text = book.Title;
+                BookAuthor.Text = book.Author;
+                BookPublisher.Text = book.Publication;
+                BookPages.Text = book.PagesCount.ToString();
+                BookYear.Text = book.Year.ToString();
+
+                BookFormat.SelectedItem = book.FileFormat;
+
+                NewBookBtn.Visibility = Visibility.Hidden;
+                SaveBookBtn.Visibility = Visibility.Visible;
+
+                this.Title = "Edit Book";
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Books.AddBook(catId, Title.Text, Author.Text,Publication.Text, Int32.Parse(Pages.Text), Int32.Parse(Year.Text));
-            mainWnd.UpdateBooks();
-            MessageBox.Show("Book added");
-            this.Close();
+            try
+            {
+                Books.AddBook(((BookCategory)CategoriesList.SelectedItem).Id, BookTitle.Text, BookAuthor.Text, BookPublisher.Text, Int32.Parse(BookPages.Text), Int32.Parse(BookYear.Text), (EnumFileFormat)BookFormat.SelectedItem);
+                mainWnd.UpdateBooksList();
+                MessageBox.Show("Book is successfully added");
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
 
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Books.UpdateBook(bookId, ((BookCategory)CategoriesList.SelectedItem).Id, BookTitle.Text, BookAuthor.Text, BookPublisher.Text, Int32.Parse(BookPages.Text), Int32.Parse(BookYear.Text), (EnumFileFormat)BookFormat.SelectedItem);
+
+                mainWnd.UpdateBooksList();
+                MessageBox.Show("Book is successfully updated");
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
         }
     }
 }

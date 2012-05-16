@@ -26,87 +26,156 @@ namespace WPF_Application
         public MainWindow()
         {
             InitializeComponent();
-        }
 
-        public MainWindow(User user)
-            : this()
-        {
-            this.user = user;
+            AutharizationTab.Visibility = Visibility.Collapsed;
+            RegistrationTab.Visibility = Visibility.Collapsed;
+            CatalogTab.Visibility = Visibility.Visible;
+            //SearchTab.Visibility = Visibility.Visible;
+
+            CatalogTab.IsSelected = true;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (CategoryList.SelectedValue != null)
+            RegisterError.Text = "";
+            
+            if (Password1.Password != Password2.Password)
             {
-                NewBook newBookWnd = new NewBook(Int32.Parse(CategoryList.SelectedValue.ToString()), this);
-                newBookWnd.Activate();
-                newBookWnd.ShowDialog();
+                RegisterError.Text = "Error: Passwords do not match";
+                return;
             }
-            else
-                MessageBox.Show("Category is not selected");
-        }
 
-        public void UpdateCategories()
-        {
-            CategoryList.Items.Clear();
-            List<BookCategory> categories = Books.GetCategories();
-            foreach (BookCategory cat in categories)
+            if (Login.Text == "")
             {
-                ComboBoxItem item = new ComboBoxItem();
-                item.Content = cat.Name;
-                item.DataContext = cat.Id;
-                CategoryList.Items.Add(item);
+                RegisterError.Text = "Error: Login is empty";
+                return;
             }
-            CategoryList.SelectedIndex = 0;
-            UpdateBooks();
-        }
 
-        public void UpdateBooks()
-        {
-            int catId = Int32.Parse(CategoryList.SelectedValue.ToString());
-            List<Book> books = Books.GetBooks(catId);
-            BookList.ItemsSource = books;
-        }
+            if (Password1.Password == "")
+            {
+                RegisterError.Text = "Error: Password is empty";
+                return;
+            }
 
+            Users.CreateUser(Login.Text, Password1.Password);
+            MessageBox.Show("Registration completed");
 
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            NewCategory NewCategoryWnd = new NewCategory(this);
-            NewCategoryWnd.Activate();
-            NewCategoryWnd.ShowDialog();
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            UpdateCategories();
-        }
-
-        private void DeleteCategoryButton_Click(object sender, RoutedEventArgs e)
-        {
-            int catId = Int32.Parse(CategoryList.SelectedValue.ToString());
-            Books.DeleteCategory(catId);
-            UpdateCategories();
-            MessageBox.Show("Deleted");
-        }
-
-        private void CategoryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            UpdateBooks();
+            AutharizationTab.IsSelected = true;
+            AuthLogin.Text = Login.Text;
+            Login.Text = Password1.Password = Password2.Password = "";
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if (BookList.SelectedIndex == -1)
+            string login = AuthLogin.Text;
+            string password = AuthPassword.Password;
+            AuthError.Text = "";
+
+            User user = Users.Auth(login, password);
+            if (user == null)
+            {
+                AuthError.Text = "Incorrect login or password";
+                return;
+            }
+
+            AutharizationTab.Visibility = Visibility.Collapsed;
+            RegistrationTab.Visibility = Visibility.Collapsed;
+            CatalogTab.Visibility = Visibility.Visible;
+            //SearchTab.Visibility = Visibility.Visible;
+
+            CatalogTab.IsSelected = true;
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            NewCategory catWnd = new NewCategory(this);
+            catWnd.Activate();
+            catWnd.ShowDialog();
+        }
+
+
+        public void UpdateCategoriesList()
+        {
+            List<BookCategory> categories = Books.GetCategories();
+            CategoryList.ItemsSource = categories;
+            CategoryList.SelectedIndex = 0;
+
+            UpdateBooksList();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateCategoriesList();
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            if (CategoryList.SelectedIndex == -1)
+            {
+                MessageBox.Show("No category selected");
+                return;
+            }
+
+            Books.DeleteCategory(((BookCategory)CategoryList.SelectedItem).Id);
+            MessageBox.Show("Category is successfully deleted");
+
+            UpdateCategoriesList();
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            if (CategoryList.SelectedIndex == -1)
+                return;
+            NewBook bookWnd = new NewBook(((BookCategory)CategoryList.SelectedItem).Id, this);
+            bookWnd.Activate();
+            bookWnd.Show();
+        }
+
+        public void UpdateBooksList()
+        {
+            if (CategoryList.SelectedIndex == -1)
+                return;
+
+            List<Book> books = Books.GetBooks(((BookCategory)CategoryList.SelectedItem).Id, ((ComboBoxItem)SortList.SelectedItem).Content.ToString());
+            BooksList.ItemsSource = books;
+        }
+
+        private void CategoryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateBooksList();
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            if (BooksList.SelectedIndex == -1)
             {
                 MessageBox.Show("No book selected");
                 return;
             }
 
-            Book book = (Book) BookList.SelectedItem;
-            Books.DeleteBook(book);
-            MessageBox.Show("Deleted");
-            UpdateBooks();
+            Books.DeleteBook((Book)BooksList.SelectedItem);
+            MessageBox.Show("Book is successfully deleted");
+            UpdateBooksList();
         }
+
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            if (BooksList.SelectedIndex == -1)
+            {
+                MessageBox.Show("No book selected");
+                return;
+            }
+
+            NewBook bookWnd = new NewBook(((BookCategory)CategoryList.SelectedItem).Id, this, ((Book)BooksList.SelectedItem).ID);
+            bookWnd.Activate();
+            bookWnd.Show();
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateBooksList();
+        }
+
 
     }
 }

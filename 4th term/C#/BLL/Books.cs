@@ -27,7 +27,7 @@ namespace BLL
             BookDal.DeleteCategory(catId);
         }
 
-        public static void AddBook(int catId, string Title, string Author, string Publication, int PagesCount, int Year)
+        public static void AddBook(int catId, string Title, string Author, string Publication, int PagesCount, int Year, EnumFileFormat fileFormat)
         {
             Book book = new Book();
 
@@ -36,18 +36,49 @@ namespace BLL
             book.Publication = Publication;
             book.PagesCount = PagesCount;
             book.Year = Year;
+            book.FileFormat = fileFormat;
 
             BookDal.CreateBook(catId, book);
         }
 
-        public static List<Book> GetBooks(int parentId)
+        public static void UpdateBook(int bookId, int catId, string Title, string Author, string Publication, int PagesCount, int Year, EnumFileFormat fileFormat)
         {
-            return BookDal.GetBooks(parentId);
+            Book book = GetBook(bookId);
+
+            book.Title = Title;
+            book.Author = Author;
+            book.Publication = Publication;
+            book.PagesCount = PagesCount;
+            book.Year = Year;
+            book.FileFormat = fileFormat;
+
+            BookDal.UpdateBook(book);
+        }
+
+        public static List<Book> GetBooks(int parentId, string sort)
+        {
+            List<Book> result = BookDal.GetBooks(parentId);
+
+            if (sort == "Title")
+                result = result.OrderBy(x => x.Title).ToList();
+            else if (sort == "Author")
+                result = result.OrderBy(x => x.Author).ToList();
+            else if (sort == "Year")
+                result = result.OrderBy(x => x.Year).ToList();
+            else if (sort == "Pages number")
+                result = result.OrderBy(x => x.PagesCount).ToList();
+
+            return result;
         }
 
         public static void DeleteBook(Book book)
         {
             BookDal.DeleteBook(book.ID);
+        }
+
+        public static Book GetBook(int bookId)
+        {
+            return BookDal.GetBook(bookId);
         }
     }
 }

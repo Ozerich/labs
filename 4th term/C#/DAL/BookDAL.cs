@@ -121,13 +121,13 @@ namespace DAL
             doc.Save(BookDal.fileName);
         }
 
-        public static void UpdateBook(int Id, Book book)
+        public static void UpdateBook(Book book)
         {
             XDocument doc = XDocument.Load(BookDal.fileName);
 
             foreach (XElement category in doc.Root.Elements())
-                foreach (XElement bookElem in category.Elements())
-                    if (bookElem.Attribute("ID").Value == Id.ToString())
+                foreach (XElement bookElem in category.Elements("Books").Elements("Book"))
+                    if (bookElem.Attribute("ID").Value == book.ID.ToString())
                     {
                         bookElem.SetElementValue("Title", book.Title);
                         bookElem.SetElementValue("Year", book.Year);
@@ -163,7 +163,7 @@ namespace DAL
                 foreach (XElement bookElem in category.Elements("Books").Elements("Book"))
                 {
                     Book book = new Book();
-                    
+
                     book.ID = Int32.Parse(bookElem.Attribute("ID").Value);
                     book.Title = bookElem.Element("Title").Value;
                     book.Author = bookElem.Element("Author").Value;
@@ -175,6 +175,28 @@ namespace DAL
                 }
             }
             return result;
+        }
+
+        public static Book GetBook(int bookId)
+        {
+            XDocument doc = XDocument.Load(BookDal.fileName);
+            foreach (XElement category in doc.Root.Elements())
+                foreach (XElement bookElem in category.Elements("Books").Elements("Book"))
+                    if (bookElem.Attribute("ID").Value == bookId.ToString())
+                    {
+                        Book book = new Book();
+
+                        book.ID = Int32.Parse(bookElem.Attribute("ID").Value);
+                        book.Title = bookElem.Element("Title").Value;
+                        book.Author = bookElem.Element("Author").Value;
+                        book.PagesCount = Int32.Parse(bookElem.Element("Pages").Value);
+                        book.Publication = bookElem.Element("Publication").Value;
+                        book.Year = Int32.Parse(bookElem.Element("Year").Value);
+
+                        return book;
+                    }
+            
+            return null;
         }
     }
 }

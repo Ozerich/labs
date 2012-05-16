@@ -29,18 +29,15 @@ namespace WPF_Application
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (CategoryTitle.Text != "")
             {
-                Books.AddCategory(Title.Text);
-                mainWnd.UpdateCategories();
-                MessageBox.Show("Category is added");
+                Books.AddCategory(CategoryTitle.Text);
+                mainWnd.UpdateCategoriesList();
+                MessageBox.Show("Category is successfully added");
                 this.Close();
-                
             }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            else
+                MessageBox.Show("Error: Category title is empty");
         }
     }
 }
