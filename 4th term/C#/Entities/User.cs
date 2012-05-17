@@ -7,6 +7,9 @@ namespace Entities
 {
     public class User
     {
+
+        public int Id { get; private set; }
+
         public string Login
         {
             get;
@@ -21,10 +24,11 @@ namespace Entities
 
         public bool IsAdmin { get; private set; }
 
-        public User(string login, string password)
+        public User(string login, string password, int id = 0)
         {
             Login = login;
             Password = password;
+            Id = id;
         }
     }
 }

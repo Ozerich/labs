@@ -30,7 +30,7 @@
                     </PasswordBox.Effect>
                 </PasswordBox>
                 <StackPanel Orientation="Horizontal" Margin="0 20 0 0" Width="200">
-                    <Button Content="_Authorize" Width="80" IsDefault="True" Click="Button_Click_1" />
+                    <Button Content="Authorize" Width="80" IsDefault="True" Click="Button_Click_1" />
                 </StackPanel>
                 <TextBlock Name="AuthError"></TextBlock>
             </StackPanel>
