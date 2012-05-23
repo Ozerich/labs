@@ -22,7 +22,6 @@ namespace Entities
             private set;
         }
 
-        public bool IsAdmin { get; private set; }
 
         public User(string login, string password, int id = 0)
         {

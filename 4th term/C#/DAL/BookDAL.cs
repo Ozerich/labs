@@ -61,13 +61,21 @@ namespace DAL
                 if (category.Element("Books") == null)
                     category.Add(new XElement("Books"));
 
+                List<XElement> tagsXml = new List<XElement>();
+
+                foreach (string tag in book.Tags)
+                    tagsXml.Add(new XElement("Tag", tag));
+
+
                 category.Element("Books").Add(new XElement("Book", new XAttribute("ID", bookId),
                     new XElement("Title", book.Title),
                     new XElement("Author", book.Author),
                     new XElement("Publication", book.Publication),
                     new XElement("Year", book.Year),
                     new XElement("Format", book.FileFormat),
-                    new XElement("Pages", book.PagesCount)
+                    new XElement("Pages", book.PagesCount),
+                    new XElement("Genre", book.Genre), new XElement("Tags", tagsXml)
+                    
                     ));
 
                 break;
@@ -139,6 +147,7 @@ namespace DAL
                         bookElem.SetElementValue("Format", book.FileFormat);
                         bookElem.SetElementValue("Publication", book.Publication);
                         bookElem.SetElementValue("Author", book.Author);
+                        bookElem.SetElementValue("Genre", book.Genre);
                     }
 
             doc.Save(BookDal.fileName);
@@ -162,7 +171,7 @@ namespace DAL
 
             foreach (XElement category in doc.Root.Elements())
             {
-                if (Int32.Parse(category.Attribute("ID").Value) != catId)
+                if (catId != 0 && Int32.Parse(category.Attribute("ID").Value) != catId)
                     continue;
                 foreach (XElement bookElem in category.Elements("Books").Elements("Book"))
                 {
@@ -174,6 +183,12 @@ namespace DAL
                     book.PagesCount = Int32.Parse(bookElem.Element("Pages").Value);
                     book.Publication = bookElem.Element("Publication").Value;
                     book.Year = Int32.Parse(bookElem.Element("Year").Value);
+                    book.Genre = bookElem.Element("Genre").Value;
+
+                    book.Tags = new List<string>();
+
+                    foreach (XElement Tag in bookElem.Element("Tags").Elements())
+                        book.Tags.Add(Tag.Value);
 
                     result.Add(book);
                 }
@@ -196,6 +211,11 @@ namespace DAL
                         book.PagesCount = Int32.Parse(bookElem.Element("Pages").Value);
                         book.Publication = bookElem.Element("Publication").Value;
                         book.Year = Int32.Parse(bookElem.Element("Year").Value);
+                        book.Genre = bookElem.Element("Genre").Value;
+                        book.Tags = new List<string>();
+
+                        foreach (XElement Tag in bookElem.Element("Tags").Elements())
+                            book.Tags.Add(Tag.Value);
 
                         return book;
                     }

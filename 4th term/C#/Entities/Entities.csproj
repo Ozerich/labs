@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Book.cs" />
     <Compile Include="BookCategory.cs" />
+    <Compile Include="BookTag.cs" />
     <Compile Include="EnumFileFormat.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>

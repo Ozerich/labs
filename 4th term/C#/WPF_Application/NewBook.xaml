@@ -4,7 +4,7 @@
 	x:Class="WPF_Application.NewBook"
 	x:Name="Window"
 	Title="Add Book"
-	Width="535" Height="191"
+	Width="535"
 	ResizeMode="NoResize" Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>
@@ -15,6 +15,8 @@
     </Window.Resources>
     <Grid Margin="5 10 0 0">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="10" />
             <RowDefinition Height="Auto" />
@@ -40,11 +42,21 @@
         <TextBox Name="BookYear" Grid.Row="2" Grid.Column="3" Margin="10 0 0 0" Width="170"></TextBox>
         <Label Grid.Row="4" Grid.Column="0">Pages:</Label>
         <TextBox Name="BookPages" Grid.Row="4" Grid.Column="1" Margin="10,0,0,0" Width="170"/>
-        <Label Grid.Row="4" Grid.Column="2" Margin="20,0,1,0">File format:</Label>
-        <ComboBox Name="BookFormat" Grid.Row="4" Grid.Column="3" Margin="10 0 0 0" Width="170"></ComboBox>
+        <Label Grid.Row="4" Grid.Column="2" Margin="20,0,1,0">Genre:</Label>
+        <TextBox Name="BookGenre" Grid.Row="4" Grid.Column="3" Margin="10 0 0 0" Width="170"></TextBox>
+        <Label Grid.Row="6" Grid.Column="2" Margin="20,0,1,0">File format:</Label>
+        <ComboBox Name="BookFormat" Grid.Row="6" Grid.Column="3" Margin="10 0 0 0" Width="170"></ComboBox>
         <Label Grid.Row="6" Grid.Column="0">Category:</Label>
         <ComboBox Name="CategoriesList" Grid.Row="6" Grid.Column="1" Margin="10,0,0,0" Width="170"></ComboBox>
-        <Button Name="NewBookBtn" Grid.Row="6" Grid.Column="3" Width="80" IsDefault="True" Content="Add Book" HorizontalAlignment="Right" Click="Button_Click"></Button>
-        <Button Name="SaveBookBtn" Content="Save Book" HorizontalAlignment="Right" IsDefault="True" Margin="0,0,4,0" Width="80" Grid.Column="3" Grid.Row="6" Visibility="Hidden" Click="Button_Click_1" />
+        <StackPanel Grid.Row="8" Grid.ColumnSpan="3">
+            <Label>Tags:</Label>
+            <ListBox Width="320" Height="100" Name="TagList" ScrollViewer.CanContentScroll="True">
+            </ListBox>
+            <Label>New Tag:</Label>
+            <TextBox Name="NewTag"></TextBox>
+            <Button Name="AddTagBtn" Width="100" Click="AddTagBtn_Click">Add Tag</Button>
+        </StackPanel>
+        <Button Name="NewBookBtn" Grid.Row="8" Grid.Column="3" Height="30" VerticalAlignment="Bottom" Width="80" IsDefault="True" Content="Add Book" HorizontalAlignment="Right" Click="Button_Click"></Button>
+        <Button Name="SaveBookBtn" Content="Save Book" HorizontalAlignment="Right" Height="30" VerticalAlignment="Bottom" IsDefault="True" Margin="0,0,4,0" Width="80" Grid.Column="3" Grid.Row="8" Visibility="Collapsed" Click="Button_Click_1" />
     </Grid>
 </Window>

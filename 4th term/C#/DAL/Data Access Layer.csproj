@@ -58,23 +58,26 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="BookDAL.cs" />
-    <Compile Include="BookDBDal.cs" />
-    <Compile Include="UserDBDal.cs" />
+    <Compile Include="BookDAL.cs" />
+    <None Include="BookDBDal.cs" />
+    <None Include="UserDBDal.cs" />
+    <Compile Include="Filters\BaseFilter.cs" />
+    <Compile Include="Filters\TitleFilter.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <None Include="UserDAL.cs">
+    <Compile Include="UserDAL.cs">
       <SubType>Code</SubType>
-    </None>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -125,6 +128,9 @@
       <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

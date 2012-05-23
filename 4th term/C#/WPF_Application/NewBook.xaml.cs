@@ -50,6 +50,10 @@ namespace WPF_Application
                 BookPublisher.Text = book.Publication;
                 BookPages.Text = book.PagesCount.ToString();
                 BookYear.Text = book.Year.ToString();
+                BookGenre.Text = book.Genre.ToString();
+
+                foreach (string bookName in book.Tags)
+                    TagList.Items.Add(bookName);
 
                 BookFormat.SelectedItem = book.FileFormat;
 
@@ -62,9 +66,14 @@ namespace WPF_Application
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+
+            List<string> tags = new List<string>();
+            foreach (string tag in TagList.Items)
+                tags.Add(tag.ToString());
+            
             try
             {
-                Books.AddBook(((BookCategory)CategoriesList.SelectedItem).Id, BookTitle.Text, BookAuthor.Text, BookPublisher.Text, Int32.Parse(BookPages.Text), Int32.Parse(BookYear.Text), (EnumFileFormat)BookFormat.SelectedItem);
+                Books.AddBook(((BookCategory)CategoriesList.SelectedItem).Id, BookTitle.Text, BookGenre.Text, BookAuthor.Text, BookPublisher.Text, Int32.Parse(BookPages.Text), Int32.Parse(BookYear.Text), (EnumFileFormat)BookFormat.SelectedItem, tags);
                 mainWnd.UpdateBooksList();
                 MessageBox.Show("Book is successfully added");
                 this.Close();
@@ -77,10 +86,13 @@ namespace WPF_Application
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            List<string> tags = new List<string>();
+            foreach(ListBoxItem tag in TagList.Items)
+                tags.Add(tag.ToString());
+
             try
             {
-                Books.UpdateBook(bookId, ((BookCategory)CategoriesList.SelectedItem).Id, BookTitle.Text, BookAuthor.Text, BookPublisher.Text, Int32.Parse(BookPages.Text), Int32.Parse(BookYear.Text), (EnumFileFormat)BookFormat.SelectedItem);
-
+                Books.UpdateBook(bookId, ((BookCategory)CategoriesList.SelectedItem).Id, BookTitle.Text, BookGenre.Text, BookAuthor.Text, BookPublisher.Text, Int32.Parse(BookPages.Text), Int32.Parse(BookYear.Text), (EnumFileFormat)BookFormat.SelectedItem, tags);
                 mainWnd.UpdateBooksList();
                 MessageBox.Show("Book is successfully updated");
                 this.Close();
@@ -89,6 +101,26 @@ namespace WPF_Application
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
+        }
+
+        private void AddTagBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (NewTag.Text == "")
+            {
+                MessageBox.Show("Tag is empty");
+                return;
+            }
+
+            foreach (string tag in TagList.Items)
+                if (tag == NewTag.Text)
+                {
+
+                    NewTag.Text = "";
+                    return;
+                }
+
+            TagList.Items.Add(NewTag.Text);
+            NewTag.Text = "";
         }
     }
 }

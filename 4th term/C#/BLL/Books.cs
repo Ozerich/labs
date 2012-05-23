@@ -27,7 +27,7 @@ namespace BLL
             BookDal.DeleteCategory(catId);
         }
 
-        public static void AddBook(int catId, string Title, string Author, string Publication, int PagesCount, int Year, EnumFileFormat fileFormat)
+        public static void AddBook(int catId, string Title, string Genre, string Author, string Publication, int PagesCount, int Year, EnumFileFormat fileFormat, List<string>Tags)
         {
             Book book = new Book();
 
@@ -37,11 +37,13 @@ namespace BLL
             book.PagesCount = PagesCount;
             book.Year = Year;
             book.FileFormat = fileFormat;
+            book.Genre = Genre;
+            book.Tags = Tags;
 
             BookDal.CreateBook(catId, book);
         }
 
-        public static void UpdateBook(int bookId, int catId, string Title, string Author, string Publication, int PagesCount, int Year, EnumFileFormat fileFormat)
+        public static void UpdateBook(int bookId, int catId, string Title, string Genre, string Author, string Publication, int PagesCount, int Year, EnumFileFormat fileFormat, List<string>Tags)
         {
             Book book = GetBook(bookId);
 
@@ -51,11 +53,13 @@ namespace BLL
             book.PagesCount = PagesCount;
             book.Year = Year;
             book.FileFormat = fileFormat;
+            book.Genre = Genre;
+            book.Tags = Tags;
 
             BookDal.UpdateBook(book);
         }
 
-        public static List<Book> GetBooks(int parentId, string sort)
+        public static List<Book> GetBooks(int parentId, string sort = "Title")
         {
             List<Book> result = BookDal.GetBooks(parentId);
 
@@ -79,6 +83,31 @@ namespace BLL
         public static Book GetBook(int bookId)
         {
             return BookDal.GetBook(bookId);
+        }
+
+        public static List<Book> Filter(BaseFilter[] filters)
+        {
+            List<Book> result = new List<Book>();
+            List<Book> books = GetBooks(0);
+
+            if (filters.Count() == 0)
+                return result;
+
+            foreach(Book book in books)
+            {
+                bool good = true; 
+                foreach(BaseFilter filter in filters)
+                    if(!filter.Check(book))
+                    {
+                        good = false;
+                        break;
+                    }
+
+                if (good)
+                    result.Add(book);
+            }
+
+            return result;
         }
     }
 }

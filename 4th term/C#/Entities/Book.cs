@@ -20,6 +20,8 @@ namespace Entities
             set;
         }
 
+        public List<string> Tags { get; set; } 
+
         /// <summary>
         /// Book title
         /// </summary>
@@ -90,7 +92,8 @@ namespace Entities
             set;
         }
 
-        public Guid UserId
+
+        public string Genre
         {
             get;
             set;

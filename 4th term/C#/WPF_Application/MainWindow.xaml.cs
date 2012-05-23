@@ -27,12 +27,12 @@ namespace WPF_Application
         {
             InitializeComponent();
 
-          /*  AutharizationTab.Visibility = Visibility.Collapsed;
+            AutharizationTab.Visibility = Visibility.Collapsed;
             RegistrationTab.Visibility = Visibility.Collapsed;
             CatalogTab.Visibility = Visibility.Visible;
-            //SearchTab.Visibility = Visibility.Visible;
+            SearchTab.Visibility = Visibility.Visible;
 
-            CatalogTab.IsSelected = true;*/
+            CatalogTab.IsSelected = true;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -174,6 +174,32 @@ namespace WPF_Application
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateBooksList();
+        }
+
+        private void SearchSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            List<BaseFilter> filters = new List<BaseFilter>();
+
+            if (TitleFilterEnabled.IsChecked == true)
+            {
+                TitleFilter filter = new TitleFilter() { Options = TitleFilter.Text };
+                filters.Add(filter);
+            }
+
+            if (AuthorFilterEnabled.IsChecked == true)
+            {
+                AuthorFilter filter = new AuthorFilter() { Options = AuthorFilter.Text };
+                filters.Add(filter);
+            }
+
+            if (PublisherTitleEnabled.IsChecked == true)
+            {
+                PublicationFilter filter = new PublicationFilter() { Options = PublisherFilter.Text };
+                filters.Add(filter);
+            }
+
+            List<Book> books = Books.Filter(filters.ToArray());
+            FilterResults.ItemsSource = books;
         }
 
 
