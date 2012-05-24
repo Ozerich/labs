@@ -6,11 +6,14 @@ using Entities;
 
 namespace BLL
 {
-    public class TitleFilter : BaseFilter
+    public class TagFilter : BaseFilter
     {
         public override bool Check(Book book)
         {
-            return book.Title.Contains((string)Options);
+            foreach (string tag in book.Tags)
+                if (Options.Equals(tag))
+                    return true;
+            return false;
         }
     }
 }

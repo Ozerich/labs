@@ -148,6 +148,17 @@ namespace DAL
                         bookElem.SetElementValue("Publication", book.Publication);
                         bookElem.SetElementValue("Author", book.Author);
                         bookElem.SetElementValue("Genre", book.Genre);
+
+                        List<XElement> tagsXml = new List<XElement>();
+
+                        XElement tagsElem = new XElement("Tags");
+
+                        foreach (string tag in book.Tags)
+                            tagsElem.Add(new XElement("Tag", tag));
+
+                        bookElem.Element("Tags").Remove();
+                        bookElem.Add(tagsElem);
+
                     }
 
             doc.Save(BookDal.fileName);

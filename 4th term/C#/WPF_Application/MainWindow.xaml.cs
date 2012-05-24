@@ -138,6 +138,10 @@ namespace WPF_Application
 
             List<Book> books = Books.GetBooks(((BookCategory)CategoryList.SelectedItem).Id, ((ComboBoxItem)SortList.SelectedItem).Content.ToString());
             BooksList.ItemsSource = books;
+
+            List<string> tags = Books.GetAllTags();
+            TagListFilter.ItemsSource = tags;
+            TagListFilter.SelectedIndex = 0;
         }
 
         private void CategoryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -198,8 +202,91 @@ namespace WPF_Application
                 filters.Add(filter);
             }
 
+            if (FileFormatFilterEnabled.IsChecked == true)
+            {
+                FileFormatFilter filter = new FileFormatFilter() { Options = FileFormatFilter.SelectedItem};
+                filters.Add(filter);
+            }
+
+            if (YearFilterEnabled.IsChecked == true)
+            {
+                Dictionary<string, int> options = new Dictionary<string,int>();
+
+                try
+                {
+                    options["min"] = Int32.Parse(YearFilterStart.Text);
+                    options["max"] = Int32.Parse(YearFilterFinish.Text);
+
+                    YearFilter filter = new YearFilter() { Options = options };
+                    filters.Add(filter);
+                }
+                catch
+                {
+                    MessageBox.Show("Range is incorrect");
+                }
+            }
+
+            if (PagesFilterEnabled.IsChecked == true)
+            {
+                Dictionary<string, int> options = new Dictionary<string,int>();
+
+                try
+                {
+                    options["min"] = Int32.Parse(PagesFilterStart.Text);
+                    options["max"] = Int32.Parse(PagesFilterFinish.Text);
+
+                    PagesFilter filter = new PagesFilter() { Options = options };
+                    filters.Add(filter);
+                }
+                catch
+                {
+                    MessageBox.Show("Range is incorrect");
+                }
+
+            }
+
+            if (TagFilterEnabled.IsChecked == true && TagListFilter.SelectedIndex != -1)
+            {
+                TagFilter tagFilter = new TagFilter() { Options = TagListFilter.SelectedItem.ToString() };
+                filters.Add(tagFilter);
+            }
+
             List<Book> books = Books.Filter(filters.ToArray());
             FilterResults.ItemsSource = books;
+        }
+
+        private void StackPanel_Loaded(object sender, RoutedEventArgs e)
+        {
+            FileFormatFilter.ItemsSource = Enum.GetValues(typeof(EnumFileFormat));
+            FileFormatFilter.SelectedIndex = 0;
+        }
+
+        private void Button_Click_7(object sender, RoutedEventArgs e)
+        {
+            if (FilterResults.SelectedIndex == -1)
+            {
+                MessageBox.Show("No book selected");
+                return;
+            }
+
+            NewBook bookWnd = new NewBook(0, this, ((Book)FilterResults.SelectedItem).ID);
+            bookWnd.Activate();
+            bookWnd.Show();
+        }
+
+        private void Button_Click_8(object sender, RoutedEventArgs e)
+        {
+            if (FilterResults.SelectedIndex == -1)
+            {
+                MessageBox.Show("No book selected");
+                return;
+            }
+
+            Books.DeleteBook((Book)FilterResults.SelectedItem);
+            MessageBox.Show("Book is successfully deleted");
+            UpdateBooksList();
+
+
         }
 
 

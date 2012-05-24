@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using Entities;
 
-namespace DAL
+namespace BLL
 {
-    public class TitleFilter : BaseFilter
+    public class FileFormatFilter : BaseFilter
     {
         public override bool Check(Book book)
         {
-            string title_str = (string)Options;
-            return book.Title.Contains(title_str);
+            return book.FileFormat == (EnumFileFormat)Options;
         }
     }
 }

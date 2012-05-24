@@ -40,6 +40,10 @@
     <Compile Include="Books.cs" />
     <Compile Include="Filters\BaseFilter.cs" />
     <Compile Include="Filters\AuthorFilter.cs" />
+    <Compile Include="Filters\TagFilter.cs" />
+    <Compile Include="Filters\YearFilter.cs" />
+    <Compile Include="Filters\PagesFilter.cs" />
+    <Compile Include="Filters\FileFormatFilter.cs" />
     <Compile Include="Filters\PublicationFilter.cs" />
     <Compile Include="Filters\TitleFilter.cs" />
     <Compile Include="Users.cs" />

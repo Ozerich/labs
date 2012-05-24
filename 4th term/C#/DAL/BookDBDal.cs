@@ -14,14 +14,14 @@ namespace DAL
 {
     public class BookDal
     {
-  
+
         public static void CreateCategory(string name)
         {
             var connection = new SqlConnection(Properties.Settings.Default.ConnectionString);
             connection.Open();
             SqlCommand com = connection.CreateCommand();
             com.Parameters.Add("@Name", SqlDbType.NVarChar);
-            com.Parameters["@Name"].Value = name;            
+            com.Parameters["@Name"].Value = name;
             com.CommandText = @"INSERT INTO [BookCatalog].[dbo].[categories]
                               ([name])
                               VALUES
@@ -45,6 +45,7 @@ namespace DAL
             com.Parameters.Add("@Year", SqlDbType.Int);
             com.Parameters.Add("@FileFormat", SqlDbType.NVarChar);
             com.Parameters.Add("@Publication", SqlDbType.NVarChar);
+            com.Parameters.Add("@Genre", SqlDbType.NVarChar);
 
             com.Parameters["@Category_ID"].Value = parentId;
             com.Parameters["@Title"].Value = book.Title;
@@ -53,10 +54,41 @@ namespace DAL
             com.Parameters["@Year"].Value = book.Year;
             com.Parameters["@FileFormat"].Value = book.FileFormat;
             com.Parameters["@Publication"].Value = book.Publication;
+            com.Parameters["@Genre"].Value = book.Genre;
 
-            com.CommandText = "INSERT INTO [BookCatalog].[dbo].[books] ([title], [category_id], [author], [pages], [year], [fileformat], [publication]) VALUES (@Title, @Category_ID, @Author, @Pages, @Year, @FileFormat, @Publication)";
-           
+
+            com.CommandText = @"INSERT INTO [BookCatalog].[dbo].[books] ([title], [category_id], [author], [pages], [year], [fileformat], [publication], [genre]) 
+                VALUES (@Title, @Category_ID, @Author, @Pages, @Year, @FileFormat, @Publication, @Genre)";
+
             com.ExecuteNonQuery();
+
+            com.Parameters.Clear();
+
+            com.Parameters.Add("@Category_ID", SqlDbType.Int);
+            com.Parameters.Add("@Title", SqlDbType.NVarChar);
+
+            com.Parameters["@Category_ID"].Value = parentId;
+            com.Parameters["@Title"].Value = book.Title;
+
+
+            com.CommandText = "SELECT ID FROM [BookCatalog].[dbo].[books] WHERE [category_id] = @Category_ID AND [title] = @Title";
+
+            int bookId = Int32.Parse(com.ExecuteScalar().ToString());
+
+            com.Parameters.Clear();
+            com.Parameters.Add("@Book_ID", SqlDbType.Int);
+            com.Parameters.Add("@Text", SqlDbType.Text);
+
+            com.Parameters["@Book_ID"].Value = bookId;
+
+            foreach (string tag in book.Tags)
+            {
+                com.Parameters["@Text"].Value = tag;
+                com.CommandText = "INSERT INTO [BookCatalog].[dbo].[tags] ([book_id], [tag]) VALUES (@Book_ID, @Text)";
+
+                com.ExecuteNonQuery();
+            }
+
             connection.Close();
         }
 
@@ -88,8 +120,11 @@ namespace DAL
             com.Parameters["@ID"].Value = Id;
 
             com.CommandText = "DELETE FROM [BookCatalog].[dbo].[books] WHERE [id] = @ID";
-
             com.ExecuteNonQuery();
+
+            com.CommandText = "DELETE FROM [BookCatalog].[dbo].[tags] WHERE [book_id] = @ID";
+            com.ExecuteNonQuery();
+
             connection.Close();
         }
 
@@ -108,7 +143,7 @@ namespace DAL
             com.CommandText = "UPDATE [BookCatalog].[dbo].[categories] SET [name] = @Name WHERE [id] = @ID";
 
             com.ExecuteNonQuery();
-            connection.Close();  
+            connection.Close();
         }
 
         public static void UpdateBook(Book book)
@@ -127,6 +162,7 @@ namespace DAL
             com.Parameters.Add("@Year", SqlDbType.Int);
             com.Parameters.Add("@FileFormat", SqlDbType.NVarChar);
             com.Parameters.Add("@Publication", SqlDbType.NVarChar);
+            com.Parameters.Add("@Genre", SqlDbType.NVarChar);
 
             com.Parameters["@Title"].Value = book.Title;
             com.Parameters["@Author"].Value = book.Author;
@@ -134,13 +170,28 @@ namespace DAL
             com.Parameters["@Year"].Value = book.Year;
             com.Parameters["@FileFormat"].Value = book.FileFormat;
             com.Parameters["@Publication"].Value = book.Publication;
+            com.Parameters["@Genre"].Value = book.Genre;
 
             com.CommandText = @"UPDATE [BookCatalog].[dbo].[books] SET 
-                        [Title] = @Title , [Author] = @Author , [Pages] = @Pages , [Year] = @Year , [FileFormat] = @FileFormat , [Publication] = @Publication 
+                        [Title] = @Title , [Author] = @Author , [Pages] = @Pages , [Year] = @Year , [FileFormat] = @FileFormat , [Publication] = @Publication, [Genre] = @Genre
                         WHERE [id] = @ID";
 
             com.ExecuteNonQuery();
-            connection.Close();  
+
+            com.CommandText = "DELETE FROM [BookCatalog].[dbo].[tags] WHERE [book_id] = @Id";
+            com.ExecuteNonQuery();
+
+            com.Parameters.Add("@Text", SqlDbType.Text);
+
+            foreach (string tag in book.Tags)
+            {
+                com.Parameters["@Text"].Value = tag;
+                com.CommandText = "INSERT INTO [BookCatalog].[dbo].[tags] ([book_id], [tag]) VALUES (@Id, @Text)";
+
+                com.ExecuteNonQuery();
+            }
+
+            connection.Close();
         }
 
         public static List<BookCategory> GetCategories()
@@ -182,7 +233,7 @@ namespace DAL
             com.Parameters.Add("@catId", SqlDbType.Int);
             com.Parameters["@catId"].Value = catId;
 
-            com.CommandText = "SELECT * FROM [BookCatalog].[dbo].[books] WHERE [category_id] = @catID";
+            com.CommandText = "SELECT * FROM [BookCatalog].[dbo].[books]" + (catId == 0 ? "" : "WHERE [category_id] = @catID");
             var reader = com.ExecuteReader();
 
             while (reader.Read())
@@ -198,9 +249,32 @@ namespace DAL
 
                 string ff = (string)reader["FileFormat"];
                 book.FileFormat = (EnumFileFormat)Enum.Parse(typeof(EnumFileFormat), ff);
-
-
                 result.Add(book);
+            }
+
+            reader.Close();
+
+            foreach (Book book in result)
+            {
+
+                SqlCommand comTag = connection.CreateCommand();
+
+                comTag.Parameters.Add("@Id", SqlDbType.Int);
+                comTag.Parameters["@Id"].Value = book.ID;
+
+
+                comTag.CommandText = "SELECT [Tag] FROM [BookCatalog].[dbo].[Tags] WHERE [Book_Id] = @Id";
+
+
+                var readerTag = comTag.ExecuteReader();
+
+                book.Tags = new List<string>();
+
+                while (readerTag.Read())
+                    book.Tags.Add(readerTag["Tag"].ToString());
+
+
+                readerTag.Close();
             }
 
             return result;
@@ -212,9 +286,9 @@ namespace DAL
             var connection = new SqlConnection(Properties.Settings.Default.ConnectionString);
             connection.Open();
 
-            SqlCommand com = connection.CreateCommand(); 
-            com.Parameters.Add("Id", SqlDbType.Int);
-            com.Parameters["Id"].Value = bookId;
+            SqlCommand com = connection.CreateCommand();
+            com.Parameters.Add("@Id", SqlDbType.Int);
+            com.Parameters["@Id"].Value = bookId;
 
             com.CommandText = "SELECT * FROM [BookCatalog].[dbo].[books] WHERE [id] = @Id";
             var reader = com.ExecuteReader();
@@ -226,15 +300,32 @@ namespace DAL
 
             reader.Read();
 
-                book.ID = bookId;
-                book.Title = (string)reader["Title"];
-                book.Author = (string)reader["Author"];
-                book.Year = (int)reader["Year"];
-                book.PagesCount = (int)reader["Pages"];
-                book.Publication = (string)reader["Publication"];
+            book.ID = bookId;
+            book.Title = (string)reader["Title"];
+            book.Author = (string)reader["Author"];
+            book.Year = (int)reader["Year"];
+            book.PagesCount = (int)reader["Pages"];
+            book.Publication = (string)reader["Publication"];
+            book.Genre = (string)reader["Genre"];
 
             string ff = (string)reader["FileFormat"];
             book.FileFormat = (EnumFileFormat)Enum.Parse(typeof(EnumFileFormat), ff);
+
+            reader.Close();
+
+
+            com.Parameters.Clear();
+
+            com.Parameters.Add("@Id", SqlDbType.Int);
+            com.Parameters["@Id"].Value = bookId;
+
+            com.CommandText = "SELECT [Tag] FROM [BookCatalog].[dbo].[Tags] WHERE [Book_Id] = @Id";
+            reader = com.ExecuteReader();
+
+            book.Tags = new List<string>();
+
+            while (reader.Read())
+                book.Tags.Add(reader["Tag"].ToString());
 
             return book;
         }

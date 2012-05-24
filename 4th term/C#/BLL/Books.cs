@@ -27,7 +27,7 @@ namespace BLL
             BookDal.DeleteCategory(catId);
         }
 
-        public static void AddBook(int catId, string Title, string Genre, string Author, string Publication, int PagesCount, int Year, EnumFileFormat fileFormat, List<string>Tags)
+        public static void AddBook(int catId, string Title, string Genre, string Author, string Publication, int PagesCount, int Year, EnumFileFormat fileFormat, List<string> Tags)
         {
             Book book = new Book();
 
@@ -43,7 +43,7 @@ namespace BLL
             BookDal.CreateBook(catId, book);
         }
 
-        public static void UpdateBook(int bookId, int catId, string Title, string Genre, string Author, string Publication, int PagesCount, int Year, EnumFileFormat fileFormat, List<string>Tags)
+        public static void UpdateBook(int bookId, int catId, string Title, string Genre, string Author, string Publication, int PagesCount, int Year, EnumFileFormat fileFormat, List<string> Tags)
         {
             Book book = GetBook(bookId);
 
@@ -93,11 +93,11 @@ namespace BLL
             if (filters.Count() == 0)
                 return result;
 
-            foreach(Book book in books)
+            foreach (Book book in books)
             {
-                bool good = true; 
-                foreach(BaseFilter filter in filters)
-                    if(!filter.Check(book))
+                bool good = true;
+                foreach (BaseFilter filter in filters)
+                    if (!filter.Check(book))
                     {
                         good = false;
                         break;
@@ -106,6 +106,20 @@ namespace BLL
                 if (good)
                     result.Add(book);
             }
+
+            return result;
+        }
+
+        public static List<string> GetAllTags()
+        {
+            List<string> result = new List<string>();
+
+            List<Book> books = GetBooks(0);
+
+            foreach (Book book in books)
+                foreach (string tag in book.Tags)
+                    if (result.Contains(tag) == false)
+                        result.Add(tag);
 
             return result;
         }

@@ -6,11 +6,13 @@ using Entities;
 
 namespace BLL
 {
-    public class TitleFilter : BaseFilter
+    public class YearFilter : BaseFilter
     {
         public override bool Check(Book book)
         {
-            return book.Title.Contains((string)Options);
+            Dictionary<string, int> range = (Dictionary<string, int>)(Options);
+
+            return book.Year >= range["min"] && book.Year <= range["max"];
         }
     }
 }

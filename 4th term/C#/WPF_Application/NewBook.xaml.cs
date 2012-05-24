@@ -87,7 +87,7 @@ namespace WPF_Application
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             List<string> tags = new List<string>();
-            foreach(ListBoxItem tag in TagList.Items)
+            foreach(string tag in TagList.Items)
                 tags.Add(tag.ToString());
 
             try

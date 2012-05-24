@@ -10,8 +10,7 @@ namespace BLL
     {
         public override bool Check(Book book)
         {
-            string author_str = (string)Options;
-            return book.Author.Contains(author_str);
+            return book.Author.Contains((string)Options);
         }
     }
 }

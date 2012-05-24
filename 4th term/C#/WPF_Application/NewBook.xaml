@@ -4,7 +4,7 @@
 	x:Class="WPF_Application.NewBook"
 	x:Name="Window"
 	Title="Add Book"
-	Width="535"
+	Width="535" Height="410"
 	ResizeMode="NoResize" Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>

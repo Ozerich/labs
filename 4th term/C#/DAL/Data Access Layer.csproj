@@ -58,19 +58,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BookDAL.cs" />
-    <None Include="BookDBDal.cs" />
-    <None Include="UserDBDal.cs" />
-    <Compile Include="Filters\BaseFilter.cs" />
-    <Compile Include="Filters\TitleFilter.cs" />
+    <None Include="BookDAL.cs" />
+    <Compile Include="BookDBDal.cs" />
+    <Compile Include="UserDBDal.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="UserDAL.cs">
+    <None Include="UserDAL.cs">
       <SubType>Code</SubType>
-    </Compile>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
