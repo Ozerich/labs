@@ -102,6 +102,9 @@ namespace DAL
             com.Parameters.Add("@ID", SqlDbType.Int);
             com.Parameters["@ID"].Value = Id;
 
+            com.CommandText = "DELETE FROM [BookCatalog].[dbo].[books] WHERE [category_id] = @ID";
+            com.ExecuteNonQuery();
+
             com.CommandText = "DELETE FROM [BookCatalog].[dbo].[categories] WHERE [id] = @ID";
 
             com.ExecuteNonQuery();

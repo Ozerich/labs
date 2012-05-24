@@ -34,5 +34,15 @@ namespace DAL.Properties {
                 this["ConnectionString"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=OZERICH-ПК;Initial Catalog=BookCatalog;Integrated Security=True")]
+        public string BookCatalogConnectionString {
+            get {
+                return ((string)(this["BookCatalogConnectionString"]));
+            }
+        }
     }
 }
