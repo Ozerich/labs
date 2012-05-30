@@ -12,7 +12,7 @@ using Entities;
 
 namespace DAL
 {
-    public class BookDal
+    public class BookDal : IDal
     {
 
         public static void CreateCategory(string name)
@@ -31,66 +31,6 @@ namespace DAL
             connection.Close();
         }
 
-        public static void CreateBook(int parentId, Book book)
-        {
-            var connection = new SqlConnection(Properties.Settings.Default.ConnectionString);
-            connection.Open();
-
-            SqlCommand com = connection.CreateCommand();
-
-            com.Parameters.Add("@Category_ID", SqlDbType.Int);
-            com.Parameters.Add("@Title", SqlDbType.NVarChar);
-            com.Parameters.Add("@Author", SqlDbType.NVarChar);
-            com.Parameters.Add("@Pages", SqlDbType.Int);
-            com.Parameters.Add("@Year", SqlDbType.Int);
-            com.Parameters.Add("@FileFormat", SqlDbType.NVarChar);
-            com.Parameters.Add("@Publication", SqlDbType.NVarChar);
-            com.Parameters.Add("@Genre", SqlDbType.NVarChar);
-
-            com.Parameters["@Category_ID"].Value = parentId;
-            com.Parameters["@Title"].Value = book.Title;
-            com.Parameters["@Author"].Value = book.Author;
-            com.Parameters["@Pages"].Value = book.PagesCount;
-            com.Parameters["@Year"].Value = book.Year;
-            com.Parameters["@FileFormat"].Value = book.FileFormat;
-            com.Parameters["@Publication"].Value = book.Publication;
-            com.Parameters["@Genre"].Value = book.Genre;
-
-
-            com.CommandText = @"INSERT INTO [BookCatalog].[dbo].[books] ([title], [category_id], [author], [pages], [year], [fileformat], [publication], [genre]) 
-                VALUES (@Title, @Category_ID, @Author, @Pages, @Year, @FileFormat, @Publication, @Genre)";
-
-            com.ExecuteNonQuery();
-
-            com.Parameters.Clear();
-
-            com.Parameters.Add("@Category_ID", SqlDbType.Int);
-            com.Parameters.Add("@Title", SqlDbType.NVarChar);
-
-            com.Parameters["@Category_ID"].Value = parentId;
-            com.Parameters["@Title"].Value = book.Title;
-
-
-            com.CommandText = "SELECT ID FROM [BookCatalog].[dbo].[books] WHERE [category_id] = @Category_ID AND [title] = @Title";
-
-            int bookId = Int32.Parse(com.ExecuteScalar().ToString());
-
-            com.Parameters.Clear();
-            com.Parameters.Add("@Book_ID", SqlDbType.Int);
-            com.Parameters.Add("@Text", SqlDbType.Text);
-
-            com.Parameters["@Book_ID"].Value = bookId;
-
-            foreach (string tag in book.Tags)
-            {
-                com.Parameters["@Text"].Value = tag;
-                com.CommandText = "INSERT INTO [BookCatalog].[dbo].[tags] ([book_id], [tag]) VALUES (@Book_ID, @Text)";
-
-                com.ExecuteNonQuery();
-            }
-
-            connection.Close();
-        }
 
         public static void DeleteCategory(int Id)
         {
@@ -108,26 +48,6 @@ namespace DAL
             com.CommandText = "DELETE FROM [BookCatalog].[dbo].[categories] WHERE [id] = @ID";
 
             com.ExecuteNonQuery();
-            connection.Close();
-        }
-
-
-        public static void DeleteBook(int Id)
-        {
-            var connection = new SqlConnection(Properties.Settings.Default.ConnectionString);
-            connection.Open();
-
-            SqlCommand com = connection.CreateCommand();
-
-            com.Parameters.Add("@ID", SqlDbType.Int);
-            com.Parameters["@ID"].Value = Id;
-
-            com.CommandText = "DELETE FROM [BookCatalog].[dbo].[books] WHERE [id] = @ID";
-            com.ExecuteNonQuery();
-
-            com.CommandText = "DELETE FROM [BookCatalog].[dbo].[tags] WHERE [book_id] = @ID";
-            com.ExecuteNonQuery();
-
             connection.Close();
         }
 
@@ -149,53 +69,6 @@ namespace DAL
             connection.Close();
         }
 
-        public static void UpdateBook(Book book)
-        {
-            var connection = new SqlConnection(Properties.Settings.Default.ConnectionString);
-            connection.Open();
-
-            SqlCommand com = connection.CreateCommand();
-
-            com.Parameters.Add("@ID", SqlDbType.Int);
-            com.Parameters["@ID"].Value = book.ID;
-
-            com.Parameters.Add("@Title", SqlDbType.NVarChar);
-            com.Parameters.Add("@Author", SqlDbType.NVarChar);
-            com.Parameters.Add("@Pages", SqlDbType.Int);
-            com.Parameters.Add("@Year", SqlDbType.Int);
-            com.Parameters.Add("@FileFormat", SqlDbType.NVarChar);
-            com.Parameters.Add("@Publication", SqlDbType.NVarChar);
-            com.Parameters.Add("@Genre", SqlDbType.NVarChar);
-
-            com.Parameters["@Title"].Value = book.Title;
-            com.Parameters["@Author"].Value = book.Author;
-            com.Parameters["@Pages"].Value = book.PagesCount;
-            com.Parameters["@Year"].Value = book.Year;
-            com.Parameters["@FileFormat"].Value = book.FileFormat;
-            com.Parameters["@Publication"].Value = book.Publication;
-            com.Parameters["@Genre"].Value = book.Genre;
-
-            com.CommandText = @"UPDATE [BookCatalog].[dbo].[books] SET 
-                        [Title] = @Title , [Author] = @Author , [Pages] = @Pages , [Year] = @Year , [FileFormat] = @FileFormat , [Publication] = @Publication, [Genre] = @Genre
-                        WHERE [id] = @ID";
-
-            com.ExecuteNonQuery();
-
-            com.CommandText = "DELETE FROM [BookCatalog].[dbo].[tags] WHERE [book_id] = @Id";
-            com.ExecuteNonQuery();
-
-            com.Parameters.Add("@Text", SqlDbType.Text);
-
-            foreach (string tag in book.Tags)
-            {
-                com.Parameters["@Text"].Value = tag;
-                com.CommandText = "INSERT INTO [BookCatalog].[dbo].[tags] ([book_id], [tag]) VALUES (@Id, @Text)";
-
-                com.ExecuteNonQuery();
-            }
-
-            connection.Close();
-        }
 
         public static List<BookCategory> GetCategories()
         {
@@ -331,6 +204,138 @@ namespace DAL
                 book.Tags.Add(reader["Tag"].ToString());
 
             return book;
+        }
+
+        public void Update(object obj)
+        {
+            Book book = obj as Book;
+
+            var connection = new SqlConnection(Properties.Settings.Default.ConnectionString);
+            connection.Open();
+
+            SqlCommand com = connection.CreateCommand();
+
+            com.Parameters.Add("@ID", SqlDbType.Int);
+            com.Parameters["@ID"].Value = book.ID;
+
+            com.Parameters.Add("@Title", SqlDbType.NVarChar);
+            com.Parameters.Add("@Author", SqlDbType.NVarChar);
+            com.Parameters.Add("@Pages", SqlDbType.Int);
+            com.Parameters.Add("@Year", SqlDbType.Int);
+            com.Parameters.Add("@FileFormat", SqlDbType.NVarChar);
+            com.Parameters.Add("@Publication", SqlDbType.NVarChar);
+            com.Parameters.Add("@Genre", SqlDbType.NVarChar);
+
+            com.Parameters["@Title"].Value = book.Title;
+            com.Parameters["@Author"].Value = book.Author;
+            com.Parameters["@Pages"].Value = book.PagesCount;
+            com.Parameters["@Year"].Value = book.Year;
+            com.Parameters["@FileFormat"].Value = book.FileFormat;
+            com.Parameters["@Publication"].Value = book.Publication;
+            com.Parameters["@Genre"].Value = book.Genre;
+
+            com.CommandText = @"UPDATE [BookCatalog].[dbo].[books] SET 
+                        [Title] = @Title , [Author] = @Author , [Pages] = @Pages , [Year] = @Year , [FileFormat] = @FileFormat , [Publication] = @Publication, [Genre] = @Genre
+                        WHERE [id] = @ID";
+
+            com.ExecuteNonQuery();
+
+            com.CommandText = "DELETE FROM [BookCatalog].[dbo].[tags] WHERE [book_id] = @Id";
+            com.ExecuteNonQuery();
+
+            com.Parameters.Add("@Text", SqlDbType.Text);
+
+            foreach (string tag in book.Tags)
+            {
+                com.Parameters["@Text"].Value = tag;
+                com.CommandText = "INSERT INTO [BookCatalog].[dbo].[tags] ([book_id], [tag]) VALUES (@Id, @Text)";
+
+                com.ExecuteNonQuery();
+            }
+
+            connection.Close();
+        }
+
+        public void Insert(object obj)
+        {
+            Book book = obj as Book;
+
+            var connection = new SqlConnection(Properties.Settings.Default.ConnectionString);
+            connection.Open();
+
+            SqlCommand com = connection.CreateCommand();
+
+            com.Parameters.Add("@Category_ID", SqlDbType.Int);
+            com.Parameters.Add("@Title", SqlDbType.NVarChar);
+            com.Parameters.Add("@Author", SqlDbType.NVarChar);
+            com.Parameters.Add("@Pages", SqlDbType.Int);
+            com.Parameters.Add("@Year", SqlDbType.Int);
+            com.Parameters.Add("@FileFormat", SqlDbType.NVarChar);
+            com.Parameters.Add("@Publication", SqlDbType.NVarChar);
+            com.Parameters.Add("@Genre", SqlDbType.NVarChar);
+
+            com.Parameters["@Category_ID"].Value = book.parentId;
+            com.Parameters["@Title"].Value = book.Title;
+            com.Parameters["@Author"].Value = book.Author;
+            com.Parameters["@Pages"].Value = book.PagesCount;
+            com.Parameters["@Year"].Value = book.Year;
+            com.Parameters["@FileFormat"].Value = book.FileFormat;
+            com.Parameters["@Publication"].Value = book.Publication;
+            com.Parameters["@Genre"].Value = book.Genre;
+
+
+            com.CommandText = @"INSERT INTO [BookCatalog].[dbo].[books] ([title], [category_id], [author], [pages], [year], [fileformat], [publication], [genre]) 
+                VALUES (@Title, @Category_ID, @Author, @Pages, @Year, @FileFormat, @Publication, @Genre)";
+
+            com.ExecuteNonQuery();
+
+            com.Parameters.Clear();
+
+            com.Parameters.Add("@Category_ID", SqlDbType.Int);
+            com.Parameters.Add("@Title", SqlDbType.NVarChar);
+
+            com.Parameters["@Category_ID"].Value = book.parentId;
+            com.Parameters["@Title"].Value = book.Title;
+
+
+            com.CommandText = "SELECT ID FROM [BookCatalog].[dbo].[books] WHERE [category_id] = @Category_ID AND [title] = @Title";
+
+            int bookId = Int32.Parse(com.ExecuteScalar().ToString());
+
+            com.Parameters.Clear();
+            com.Parameters.Add("@Book_ID", SqlDbType.Int);
+            com.Parameters.Add("@Text", SqlDbType.Text);
+
+            com.Parameters["@Book_ID"].Value = bookId;
+
+            foreach (string tag in book.Tags)
+            {
+                com.Parameters["@Text"].Value = tag;
+                com.CommandText = "INSERT INTO [BookCatalog].[dbo].[tags] ([book_id], [tag]) VALUES (@Book_ID, @Text)";
+
+                com.ExecuteNonQuery();
+            }
+
+            connection.Close();
+        }
+
+        public void Delete(int id)
+        {
+            var connection = new SqlConnection(Properties.Settings.Default.ConnectionString);
+            connection.Open();
+
+            SqlCommand com = connection.CreateCommand();
+
+            com.Parameters.Add("@ID", SqlDbType.Int);
+            com.Parameters["@ID"].Value = id;
+
+            com.CommandText = "DELETE FROM [BookCatalog].[dbo].[books] WHERE [id] = @ID";
+            com.ExecuteNonQuery();
+
+            com.CommandText = "DELETE FROM [BookCatalog].[dbo].[tags] WHERE [book_id] = @ID";
+            com.ExecuteNonQuery();
+
+            connection.Close();
         }
     }
 }

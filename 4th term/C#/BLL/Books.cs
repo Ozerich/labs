@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Entities;
-using DAL;
 
 
 namespace BLL
@@ -12,19 +11,22 @@ namespace BLL
     {
         public static List<BookCategory> GetCategories()
         {
-            return BookDal.GetCategories();
+            return BookCategory.SelectAll();
         }
 
         public static void AddCategory(string name)
         {
             if (name.Length == 0)
                 throw new ArgumentException("Name can not be empty");
-            BookDal.CreateCategory(name);
+
+            BookCategory bookCategory = new BookCategory(name);
+            bookCategory.Persist();
         }
 
         public static void DeleteCategory(int catId)
         {
-            BookDal.DeleteCategory(catId);
+            BookCategory bookCategory = new BookCategory(catId);
+            bookCategory.Delete();
         }
 
         public static void AddBook(int catId, string Title, string Genre, string Author, string Publication, int PagesCount, int Year, EnumFileFormat fileFormat, List<string> Tags)
@@ -33,6 +35,7 @@ namespace BLL
 
             book.Title = Title;
             book.Author = Author;
+            book.parentId = catId;
             book.Publication = Publication;
             book.PagesCount = PagesCount;
             book.Year = Year;
@@ -40,7 +43,7 @@ namespace BLL
             book.Genre = Genre;
             book.Tags = Tags;
 
-            BookDal.CreateBook(catId, book);
+            book.Persist();
         }
 
         public static void UpdateBook(int bookId, int catId, string Title, string Genre, string Author, string Publication, int PagesCount, int Year, EnumFileFormat fileFormat, List<string> Tags)
@@ -49,6 +52,7 @@ namespace BLL
 
             book.Title = Title;
             book.Author = Author;
+            book.parentId = catId;
             book.Publication = Publication;
             book.PagesCount = PagesCount;
             book.Year = Year;
@@ -56,12 +60,12 @@ namespace BLL
             book.Genre = Genre;
             book.Tags = Tags;
 
-            BookDal.UpdateBook(book);
+            book.Persist();
         }
 
         public static List<Book> GetBooks(int parentId, string sort = "Title")
         {
-            List<Book> result = BookDal.GetBooks(parentId);
+            List<Book> result = Book.SelectAll(parentId);
 
             if (sort == "Title")
                 result = result.OrderBy(x => x.Title).ToList();
@@ -77,12 +81,12 @@ namespace BLL
 
         public static void DeleteBook(Book book)
         {
-            BookDal.DeleteBook(book.ID);
+            book.Delete();
         }
 
         public static Book GetBook(int bookId)
         {
-            return BookDal.GetBook(bookId);
+            return new Book(bookId);
         }
 
         public static List<Book> Filter(BaseFilter[] filters)

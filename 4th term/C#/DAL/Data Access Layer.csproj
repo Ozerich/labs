@@ -58,8 +58,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="BookDAL.cs" />
     <Compile Include="BookDBDal.cs" />
+    <Compile Include="IDal.cs" />
     <Compile Include="UserDBDal.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

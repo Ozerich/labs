@@ -170,7 +170,7 @@ namespace WPF_Application
                 return;
             }
 
-            NewBook bookWnd = new NewBook(((BookCategory)CategoryList.SelectedItem).Id, this, ((Book)BooksList.SelectedItem).ID);
+            NewBook bookWnd = new NewBook(((BookCategory)CategoryList.SelectedItem).Id, this, ((Book)BooksList.SelectedItem).Id);
             bookWnd.Activate();
             bookWnd.Show();
         }
@@ -269,7 +269,7 @@ namespace WPF_Application
                 return;
             }
 
-            NewBook bookWnd = new NewBook(0, this, ((Book)FilterResults.SelectedItem).ID);
+            NewBook bookWnd = new NewBook(0, this, ((Book)FilterResults.SelectedItem).Id);
             bookWnd.Activate();
             bookWnd.Show();
         }

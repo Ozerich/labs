@@ -43,7 +43,7 @@ namespace WPF_Application
 
             if (bookId != 0)
             {
-                Book book = Books.GetBook(bookId);
+                Book book = new Book(bookId);
 
                 BookTitle.Text = book.Title;
                 BookAuthor.Text = book.Author;

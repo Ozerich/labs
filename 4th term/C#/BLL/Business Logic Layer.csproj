@@ -52,10 +52,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DAL\Data Access Layer.csproj">
-      <Project>{634D6EA4-C3BB-48DF-BA3B-E97FE59A403F}</Project>
-      <Name>Data Access Layer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Entities\Entities.csproj">
       <Project>{8166CD4D-4C2C-486A-B1CA-E0E8147B9FA8}</Project>
       <Name>Entities</Name>
