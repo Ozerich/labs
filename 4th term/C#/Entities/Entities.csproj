@@ -55,8 +55,8 @@
     <Compile Include="Book.cs" />
     <Compile Include="BookCategory.cs" />
     <Compile Include="BookTag.cs" />
+    <Compile Include="Catalog.cs" />
     <Compile Include="EnumFileFormat.cs" />
-    <Compile Include="IEntity.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -69,6 +69,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">

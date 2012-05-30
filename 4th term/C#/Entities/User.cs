@@ -5,99 +5,30 @@ using System.Text;
 using System.Data.SqlClient;
 using System.Data.Common;
 using System.Data;
+using System.Data.Linq.Mapping;
 
 namespace Entities
 {
-    public class User : IEntity
+    [Table(Name = "Users")]
+    public class User
     {
 
-        public User(int id)
-        {
-            Id = id;
-            Select();
-        }
-
-        public User()
-        {
-            Id = -1;
-        }
-
-        public User(string login, string password) : this()
-        {
-            Login = login;
-            Password = password;
-        }
-        
+        [Column(IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; private set; }
 
-        public string Login
-        {
-            get;
-            private set;
-        }
+        [Column]
+        public string Login { get; set; }
 
-        public string Password
-        {
-            get;
-            private set;
-        }
+        [Column]
+        public string Password { get; set; }
 
-
-
-
-        public void Persist()
-        {
-            SqlConnection connection = new SqlConnection(Properties.Settings.Default.ConnectionString);
-            connection.Open();
-
-            if (Id == -1)
-                Id = (int)(new SqlCommand(String.Format("INSERT INTO Users (Login, Password) OUTPUT INSERTED.id VALUES ('{0}','{1}')", Login, Password)).ExecuteScalar());
-            else
-                new SqlCommand(
-                    String.Format("UPDATE Users SET Login = '{0}', Password = '{1}' WHERE id = {2}", Login, Password, Id)).ExecuteNonQuery();
-
-            connection.Close();
-        }
-
-        public void Delete()
-        {
-            SqlConnection connection = new SqlConnection(Properties.Settings.Default.ConnectionString);
-            connection.Open();
-
-            new SqlCommand(String.Format("DELETE FROM Users WHERE Id = {0}", Id)).ExecuteNonQuery();
-
-            connection.Close();
-        }
-
-
-        public void Select()
-        {
-            throw new NotImplementedException();
-        }
 
         public static User FindByLogin(string login)
         {
-            var connection = new SqlConnection(Properties.Settings.Default.ConnectionString);
-            connection.Open();
+            Catalog catalog = new Catalog();
 
-            SqlCommand com = connection.CreateCommand();
-
-            com.CommandText = "SELECT ID, Password FROM users WHERE [login] = @login";
-
-            
-
-            var reader = new SqlCommand(String.Format("SELECT * FROM users WHERE login = '{0}'", login)).ExecuteReader();
-            if (reader.HasRows == false)
-                return null;
-
-            reader.Read();
-            
-            int id = (int)reader["Id"];
-
-            reader.Close();
-            connection.Close();
-
-            return new User(id);
+            var q = from user in catalog.Users where user.Login == login select user;
+            return q.First();
         }
     }
 }

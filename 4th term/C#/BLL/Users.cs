@@ -12,8 +12,15 @@ namespace BLL
 
         public static void CreateUser(string login, string password)
         {
-            User user = new User(login, password);
-            user.Persist();
+            User user = new User();
+            user.Login = login;
+            user.Password = password;
+
+            Catalog catalog = new Catalog();
+
+            catalog.Users.InsertOnSubmit(user);
+
+            catalog.SubmitChanges();
         }
 
         public static bool CheckExist(string login)

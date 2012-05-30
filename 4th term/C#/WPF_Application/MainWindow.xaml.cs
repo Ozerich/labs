@@ -27,12 +27,12 @@ namespace WPF_Application
         {
             InitializeComponent();
 
-            AutharizationTab.Visibility = Visibility.Collapsed;
+         /*   AutharizationTab.Visibility = Visibility.Collapsed;
             RegistrationTab.Visibility = Visibility.Collapsed;
             CatalogTab.Visibility = Visibility.Visible;
             SearchTab.Visibility = Visibility.Visible;
 
-            CatalogTab.IsSelected = true;
+            CatalogTab.IsSelected = true;*/
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
