@@ -30,5 +30,26 @@ namespace Entities
             var q = from user in catalog.Users where user.Login == login select user;
             return q.First();
         }
-    }
+
+        public bool IsAdmin
+        {
+            get
+            {
+                return Login == "admin";
+            }
+            private set { }
+        }
+
+
+        public bool HasBook(int book_Id)
+        {
+            Catalog catalog = new Catalog();
+
+            var q = from book in catalog.UserBooks where book.Book_Id == book_Id where book.User_Id == Id select book;
+
+            return q.Count() > 0;
+        }
+
+
+     }
 }

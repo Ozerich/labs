@@ -9,6 +9,7 @@ namespace BLL
 {
     public static class Users
     {
+        public static User CurrentUser = null;
 
         public static void CreateUser(string login, string password)
         {
@@ -32,7 +33,14 @@ namespace BLL
         public static User Auth(string login, string password)
         {
             User user = User.FindByLogin(login);
-            return user != null && user.Password == password ? user : null;
+            
+            bool success = user != null && user.Password == password;
+            if (success)
+            {
+                CurrentUser = user;
+            }
+
+            return success ? user : null;
         }
     }
 }

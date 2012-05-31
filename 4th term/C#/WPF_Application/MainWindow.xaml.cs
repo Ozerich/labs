@@ -26,13 +26,6 @@ namespace WPF_Application
         public MainWindow()
         {
             InitializeComponent();
-
-         /*   AutharizationTab.Visibility = Visibility.Collapsed;
-            RegistrationTab.Visibility = Visibility.Collapsed;
-            CatalogTab.Visibility = Visibility.Visible;
-            SearchTab.Visibility = Visibility.Visible;
-
-            CatalogTab.IsSelected = true;*/
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -78,10 +71,15 @@ namespace WPF_Application
                 return;
             }
 
+            if (Users.CurrentUser.IsAdmin)
+                NewBookBtn.Visibility = EditBookBtn.Visibility = DeleteBookBtn.Visibility = NewCategorybtn.Visibility = 
+                    DeleteCategoryBtn.Visibility = DeleteBookSearchBtn.Visibility = EditBookSearchBtn.Visibility = Visibility.Visible;
+     
+
             AutharizationTab.Visibility = Visibility.Collapsed;
             RegistrationTab.Visibility = Visibility.Collapsed;
             CatalogTab.Visibility = Visibility.Visible;
-            //SearchTab.Visibility = Visibility.Visible;
+            SearchTab.Visibility = Visibility.Visible;
 
             CatalogTab.IsSelected = true;
         }
@@ -106,6 +104,10 @@ namespace WPF_Application
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateCategoriesList();
+
+            NewBookBtn.Visibility = EditBookBtn.Visibility = DeleteBookBtn.Visibility = 
+                PutBookBtn.Visibility = TakeBookBtn.Visibility = NewCategorybtn.Visibility = DeleteCategoryBtn.Visibility = 
+                    DeleteBookSearchBtn.Visibility = EditBookSearchBtn.Visibility = Visibility.Collapsed;
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
@@ -289,6 +291,38 @@ namespace WPF_Application
 
         }
 
+        private void BooksList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Book book = (Book)BooksList.SelectedItem;
+
+            if (book == null)
+                return;
+
+            PutBookBtn.Visibility = TakeBookBtn.Visibility = Visibility.Collapsed;
+
+            if (Users.CurrentUser.HasBook(book.Id))
+                PutBookBtn.Visibility = Visibility.Visible;
+            else
+                TakeBookBtn.Visibility = Visibility.Visible;
+        }
+
+        private void TakeBookBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Book book = BooksList.SelectedItem as Book;
+            UserBook.TakeBook(book.Id, Users.CurrentUser.Id);
+
+            TakeBookBtn.Visibility = Visibility.Collapsed;
+            PutBookBtn.Visibility = Visibility.Visible;
+        }
+
+        private void PutBookBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Book book = BooksList.SelectedItem as Book;
+            UserBook.PutBook(book.Id, Users.CurrentUser.Id);
+
+            TakeBookBtn.Visibility = Visibility.Visible;
+            PutBookBtn.Visibility = Visibility.Collapsed;
+        }
 
     }
 }

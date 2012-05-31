@@ -56,6 +56,7 @@
     <Compile Include="BookCategory.cs" />
     <Compile Include="BookTag.cs" />
     <Compile Include="Catalog.cs" />
+    <Compile Include="UserBook.cs" />
     <Compile Include="EnumFileFormat.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

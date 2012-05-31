@@ -6,8 +6,6 @@ using System.Data.SqlClient;
 using System.Data.Common;
 using System.Data;
 using System.Data.Linq.Mapping;
-using System.Data.SqlClient;
-
 namespace Entities
 {
     [Table(Name="Categories")]

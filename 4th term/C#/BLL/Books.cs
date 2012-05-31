@@ -34,6 +34,10 @@ namespace BLL
         {
             Catalog catalog = new Catalog();
 
+            var bookQuery = from book in catalog.Books where book.parentId == catId select book;
+            foreach (Book bookElem in bookQuery)
+                DeleteBook(bookElem);
+
             var categoryQuery = from category in catalog.BookCategories where category.Id == catId select category;
 
             catalog.BookCategories.DeleteOnSubmit(categoryQuery.First());
@@ -151,6 +155,12 @@ namespace BLL
             var tagq = from tag in catalog.Tags where tag.Book_Id == book.Id select tag;
             foreach (BookTag tag in tagq)
                 catalog.Tags.DeleteOnSubmit(tag);
+
+            var userq = from t in catalog.UserBooks where t.Book_Id == book.Id select t;
+            foreach (UserBook ub in userq)
+                catalog.UserBooks.DeleteOnSubmit(ub);
+
+            catalog.SubmitChanges();
 
             var q = from qBook in catalog.Books where qBook.Id == book.Id select book;
 

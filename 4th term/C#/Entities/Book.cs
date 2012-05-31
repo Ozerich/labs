@@ -92,7 +92,6 @@ namespace Entities
         }
 
 
-
      
     }
 }

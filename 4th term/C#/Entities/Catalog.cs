@@ -12,6 +12,7 @@ namespace Entities
         public Table<Book> Books;
         public Table<BookTag> Tags;
         public Table<User> Users;
+        public Table<UserBook> UserBooks;
 
         public Catalog() : base(Properties.Settings.Default.ConnectionString) { }
     }
