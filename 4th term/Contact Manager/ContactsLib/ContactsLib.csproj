@@ -42,11 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\ContactGroup.cs" />
-    <Compile Include="Entities\ContactList.cs" />
-    <Compile Include="Entities\Contact.cs" />
-    <Compile Include="Entities\ContactDetail.cs" />
-    <Compile Include="Entities\BaseEntity.cs" />
+    <Compile Include="Catalog.cs" />
+    <Compile Include="ContactGroup.cs" />
+    <Compile Include="Contact.cs" />
+    <Compile Include="ContactList.cs" />
+    <Compile Include="ContactDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

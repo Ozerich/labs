@@ -10,7 +10,6 @@ using System.Windows.Documents;
 using System.Windows.Shell;
 using BLL;
 using ContactsLib;
-using ContactsLib.Entities;
 using Microsoft.Win32;
 
 namespace ContactsApp
@@ -79,7 +78,7 @@ namespace ContactsApp
             mainWindow.ContactDetails.Children.Add(ll);
             EditableField eff = new EditableField();
             eff.Changed += ContactGroup_Changed;
-            eff.Label.Content = CurrentContact.Group;
+            eff.Label.Content = ContactList.FindGroupById(CurrentContact.Group_ID);
             eff.Tag = CurrentContact;
             eff.Deletable = false;
             mainWindow.ContactDetails.Children.Add(eff);
@@ -106,15 +105,16 @@ namespace ContactsApp
         void ef_Deleted(EditableField obj)
         {
             CurrentContact.Details.Remove(obj.Tag as ContactDetail);
-            (obj.Tag as ContactDetail).Delete();
+            ContactList.RemoveDetail((obj.Tag as ContactDetail));
             FillDetails();
         }
 
         void ContactGroup_Changed(EditableField sender, string value) 
         {
             Contact c = sender.Tag as Contact;
-            c.Group = new ContactGroup().GetGroupByName(value);
-            c.Persist();
+            c.Group_ID = ContactList.GetGroupByName(value).ID;
+            ContactList.UpdateContact(c);
+            
             FillContactListbox();
             FillDetails();
         }
@@ -123,7 +123,7 @@ namespace ContactsApp
         {
             Contact c = sender.Tag as Contact;
             c.Name = value;
-            c.Persist();
+            ContactList.UpdateContact(c);
             FillContactListbox();
             FillDetails();
         }
@@ -131,7 +131,7 @@ namespace ContactsApp
         public void ef_Changed(EditableField sender, string value)
         {
             (sender.Tag as ContactDetail).Value = value;
-            (sender.Tag as ContactDetail).Persist();
+            ContactList.UpdateContactDetail((sender.Tag as ContactDetail));
             FillContactListbox();
             FillDetails();
         }
@@ -152,7 +152,7 @@ namespace ContactsApp
                 exp.Content = lbx;
 
                 foreach (Contact c in ContactList.Sorted)
-                    if (c.Group.Id == g.Id)
+                    if (c.Group_ID == g.ID)
                     {
                         ContactListItem i = new ContactListItem();
                         i.PersonName.Content = c.Name;
@@ -172,7 +172,6 @@ namespace ContactsApp
         {
             Contact c = new Contact();
             c.Name = name;
-            c.Persist();
             ContactList.Add(c);
             FillContactListbox();
         }
@@ -180,10 +179,13 @@ namespace ContactsApp
         public void AddSimpleDetail(string title, string value)
         {
             ContactDetail cd = new ContactDetail();
-            cd.Contact = CurrentContact;
+            cd.Contact_ID = CurrentContact.ID;
             cd.Name = title;
             cd.Value = value;
-            cd.Persist();
+
+            ContactList.UpdateContactDetail(cd);
+ 
+
             CurrentContact.Details.Add(cd);
             FillDetails();
         }
