@@ -1,0 +1,29 @@
+<ContactList xmlns="http://schemas.datacontract.org/2004/07/ContactsLib" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+  <Contacts xmlns:a="http://schemas.datacontract.org/2004/07/ContactsLib.Entities">
+    <a:Contact>
+      <a:Details>
+        <a:ContactDetail i:type="a:SimpleContactDetail">
+          <a:Content i:type="b:string" xmlns:b="http://www.w3.org/2001/XMLSchema">8534950</a:Content>
+          <a:Name>Phone</a:Name>
+        </a:ContactDetail>
+      </a:Details>
+      <a:Group>рлорл</a:Group>
+      <a:Name>авыпвап</a:Name>
+    </a:Contact>
+    <a:Contact>
+      <a:Details>
+        <a:ContactDetail i:type="a:SimpleContactDetail">
+          <a:Content i:type="b:string" xmlns:b="http://www.w3.org/2001/XMLSchema">ропро</a:Content>
+          <a:Name>Address</a:Name>
+        </a:ContactDetail>
+      </a:Details>
+      <a:Group>дджэж</a:Group>
+      <a:Name>арвыпрд</a:Name>
+    </a:Contact>
+    <a:Contact>
+      <a:Details/>
+      <a:Group>рлорл</a:Group>
+      <a:Name>авыаываы</a:Name>
+    </a:Contact>
+  </Contacts>
+</ContactList>

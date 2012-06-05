@@ -1,0 +1,14 @@
+﻿<Application x:Class="ContactsApp.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Startup="OnStartup">
+    <Application.Resources>
+
+    </Application.Resources>
+    <JumpList.JumpList>
+        <JumpList>
+            <JumpPath CustomCategory="XML List"
+                Path="E:\Учёба\2 курс 2 сем\ИСП\ContactManager\*.xml"></JumpPath>
+        </JumpList>
+    </JumpList.JumpList>
+</Application>

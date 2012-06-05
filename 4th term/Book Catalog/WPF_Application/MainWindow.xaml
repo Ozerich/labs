@@ -1,0 +1,237 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:DataBinding"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+	x:Class="WPF_Application.MainWindow"
+	x:Name="Window"
+	Title="Book Catalog"
+	Width="800" Height="600" Loaded="Window_Loaded" Icon="favicon.png">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <local:InverseBooleanConverter x:Key="InverseBooleanConverter"></local:InverseBooleanConverter>
+        </ResourceDictionary>
+
+    </Window.Resources>
+    
+    <TabControl TabStripPlacement="Left" Margin="0, 0, 0, 10" Background="White">
+        <TabItem x:Name="AutharizationTab" Header="Authorization">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock HorizontalAlignment="Center">Login</TextBlock>
+                <TextBox Name="AuthLogin" Width="200" BorderThickness="2">
+                    <TextBox.Effect>
+                        <DropShadowEffect/>
+                    </TextBox.Effect>
+                </TextBox>
+                <TextBlock HorizontalAlignment="Center" Margin="0 10 0 0">Password</TextBlock>
+                <PasswordBox Name="AuthPassword" Width="200" BorderThickness="2">
+                    <PasswordBox.Effect>
+                        <DropShadowEffect/>
+                    </PasswordBox.Effect>
+                </PasswordBox>
+                <StackPanel Orientation="Horizontal" Margin="0 20 0 0" Width="200">
+                    <Button Content="Authorize" Width="80" IsDefault="True" Click="Button_Click_1" />
+                </StackPanel>
+                <TextBlock Name="AuthError"></TextBlock>
+            </StackPanel>
+        </TabItem>
+
+        <TabItem x:Name="RegistrationTab" Header="Registration">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock HorizontalAlignment="Center">Login</TextBlock>
+                <TextBox Name="Login"  Width="200" BorderThickness="2">
+                    <TextBox.Effect>
+                        <DropShadowEffect/>
+                    </TextBox.Effect>
+                </TextBox>
+                <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0">Password</TextBlock>
+                <PasswordBox Name="Password1" Width="200" BorderThickness="2">
+                    <PasswordBox.Effect>
+                        <DropShadowEffect/>
+                    </PasswordBox.Effect>
+                </PasswordBox>
+                <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0">Retype Password</TextBlock>
+                <PasswordBox Name="Password2" Width="200" BorderThickness="2">
+                    <PasswordBox.Effect>
+                        <DropShadowEffect/>
+                    </PasswordBox.Effect>
+                </PasswordBox>
+                <Button Content="_Register" Margin="0 10 0 0" Width="80" Click="Button_Click" />
+                <TextBlock Name="RegisterError"></TextBlock>
+            </StackPanel>
+        </TabItem>
+
+        <TabItem x:Name="CatalogTab" Header="Catalog" Visibility="Collapsed">
+            <StackPanel Margin="10 10 0 0">
+                <StackPanel Margin="0 0 0 10" Orientation="Horizontal">
+                    <Label Margin="0 0 10 0">Categories:</Label>
+                    <ComboBox Name="CategoryList" Width="150" IsReadOnly="True" VerticalAlignment="Top" HorizontalAlignment="Left" Height="22" SelectionChanged="CategoryList_SelectionChanged"></ComboBox>
+                    <Label Margin="0 0 10 0">Sort by:</Label>
+                    <ComboBox Name="SortList" Width="130" IsReadOnly="True" VerticalAlignment="Top" HorizontalAlignment="Left" Height="22" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
+                        <ComboBoxItem>Title</ComboBoxItem>
+                        <ComboBoxItem>Author</ComboBoxItem>
+                        <ComboBoxItem>Year</ComboBoxItem>
+                        <ComboBoxItem>Pages number</ComboBoxItem>
+                    </ComboBox>
+                    <Button Content="New Category" Height="22" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Name="NewCategorybtn" Click="Button_Click_2" />
+                    <Button Content="Delete Category" Height="22" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Name="DeleteCategoryBtn" Click="Button_Click_3" />
+                </StackPanel>
+                <StackPanel VerticalAlignment="Top">
+                    <ListView Name="BooksList" SelectionChanged="BooksList_SelectionChanged">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Title}"  Header="Title" Width="180"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Author}" Header="Author" Width="180"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Year}" Header="Year" Width="60"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding PagesCount}" Header="Pages" Width="50"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Publication}" Header="Publisher" Width="140"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding FileFormat}" Header="Format" Width="50"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 20 0 0">
+                    <Button Name="NewBookBtn" Content="New book" Click="Button_Click_4"></Button>
+                    <Button Name="EditBookBtn" Content="Edit book" Click="Button_Click_6"></Button>
+                    <Button Name="DeleteBookBtn" Content="Delete book" Click="Button_Click_5"></Button>
+                    <Button Name="TakeBookBtn" Click="TakeBookBtn_Click">Take Book</Button>
+                    <Button Name="PutBookBtn" Click="PutBookBtn_Click">Put Book</Button>
+                </StackPanel>
+            </StackPanel>
+        </TabItem>
+
+        <TabItem x:Name="SearchTab" Header="Search" Visibility="Collapsed">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Row="0" Grid.Column="0" Margin="10" Orientation="Vertical" Width="210" HorizontalAlignment="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Search by Author:</Label>
+                        <CheckBox Name="AuthorFilterEnabled"  Margin="10 6 10 0"></CheckBox>
+                    </StackPanel>
+                    <TextBox IsReadOnly="{Binding ElementName=AuthorFilterEnabled, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}"  Width="200" Name="AuthorFilter" HorizontalAlignment="Left"></TextBox>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Search by Title</Label>
+                        <CheckBox Name="TitleFilterEnabled" Margin="10 6 10 0"></CheckBox>
+                    </StackPanel>
+                    <TextBox IsReadOnly="{Binding ElementName=TitleFilterEnabled, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}"   Width="200" Name="TitleFilter" HorizontalAlignment="Left"></TextBox>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Search by Publisher</Label>
+                        <CheckBox Name="PublisherTitleEnabled" Margin="10 6 10 0"></CheckBox>
+                    </StackPanel>
+                    <TextBox IsReadOnly="{Binding ElementName=PublisherTitleEnabled, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}"   Width="200" Name="PublisherFilter" HorizontalAlignment="Left"></TextBox>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>File format</Label>
+                        <CheckBox Name="FileFormatFilterEnabled" Margin="10 6 10 0"></CheckBox>
+                    </StackPanel>
+                    <ComboBox IsReadOnly="{Binding ElementName=FileFormatFilterEnabled, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}"   Name="FileFormatFilter" Width="200" HorizontalAlignment="Left">
+                   </ComboBox>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Search by Pages Number</Label>
+                        <CheckBox Name="PagesFilterEnabled" Margin="10 6 10 0"></CheckBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Loaded="StackPanel_Loaded">
+                        <Label>From:</Label>
+                        <TextBox IsReadOnly="{Binding ElementName=PagesFilterEnabled, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}"   Name="PagesFilterStart" Width="30"></TextBox>
+                        <Label>To:</Label>
+                        <TextBox IsReadOnly="{Binding ElementName=PagesFilterEnabled, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}"   Name="PagesFilterFinish" Width="30"></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Search by Year</Label>
+                        <CheckBox Name="YearFilterEnabled"  Margin="10 6 10 0"></CheckBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>From:</Label>
+                        <TextBox IsReadOnly="{Binding ElementName=YearFilterEnabled, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}"   Name="YearFilterStart" Width="30"></TextBox>
+                        <Label>To:</Label>
+                        <TextBox IsReadOnly="{Binding ElementName=YearFilterEnabled, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}"   Name="YearFilterFinish" Width="30"></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Search by Tag</Label>
+                        <CheckBox Name="TagFilterEnabled" Margin="10 6 10 0"></CheckBox>
+                    </StackPanel>
+                    <ComboBox IsReadOnly="{Binding ElementName=TagFilterEnabled, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}"   Name="TagListFilter" Width="200" HorizontalAlignment="Left"></ComboBox>
+                       <Button Height="22" Width="200" Margin="0 10 0 0" Name="SearchSubmit" Content="Search!" HorizontalAlignment="Left" Click="SearchSubmit_Click"></Button>
+                </StackPanel>
+                <ScrollViewer Grid.Row="0" Grid.Column="1" Width="470" CanContentScroll="True" HorizontalAlignment="Right">
+                    <StackPanel Width="450"  Orientation="Vertical">
+                        <ListView Name="FilterResults">
+                            <ListView.View>
+                                <GridView>
+                                    
+                                    
+                                <GridViewColumn DisplayMemberBinding="{Binding Title}"  Header="Title" Width="120"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Author}" Header="Author" Width="120"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Year}" Header="Year" Width="50"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding PagesCount}" Header="Pages" Width="50"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Publication}" Header="Publisher" Width="120"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding FileFormat}" Header="Format" Width="50"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <StackPanel Orientation="Horizontal" Width="450" Margin="0 10 0 0">
+                            <Button Content="Delete book" Name="DeleteBookSearchBtn"></Button>
+                            <Button Content="Edit book" Name="EditBookSearchBtn" Click="Button_Click_7"></Button>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </TabItem>
+
+        <TabItem x:Name="AboutTab" Header="About">
+            <Grid>
+                <Rectangle Name="MyRect" 
+                 Margin ="10,10,10,10"
+                 HorizontalAlignment ="Stretch" VerticalAlignment ="Stretch"
+                 Stroke ="Gold" StrokeThickness ="5" 
+                 StrokeDashArray="0.5,2" StrokeDashCap="Round">
+
+                    <Rectangle.Triggers>
+                        <EventTrigger RoutedEvent ="Rectangle.Loaded">
+                            <EventTrigger.Actions >
+                                <BeginStoryboard>
+                                    <Storyboard>
+
+                                        <DoubleAnimation 
+                    Storyboard.TargetName="MyRect"
+                    Storyboard.TargetProperty="StrokeDashOffset"
+                    To="20" Duration="0:0:10"
+                    RepeatBehavior="Forever" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </Rectangle.Triggers>
+
+                    <Rectangle.Fill>
+                        <VisualBrush>
+
+                            <VisualBrush.Visual>
+                                <TextBlock FontSize="10"
+                       Text="Book Catalog" >
+                <TextBlock.Background>
+                  <LinearGradientBrush>
+                    <LinearGradientBrush.GradientStops>
+                      <GradientStop Offset="0" Color="Yellow" />
+                      <GradientStop Offset="1" Color="Red" />
+                    </LinearGradientBrush.GradientStops>
+                  </LinearGradientBrush>
+                </TextBlock.Background>
+
+                                </TextBlock>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Grid>
+        </TabItem>
+    </TabControl>
+</Window>
